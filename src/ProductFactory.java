@@ -11,13 +11,23 @@ public class ProductFactory {
 
         System.out.println(
                 "Choose type on product.\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
-        choice = scanner.nextInt();
+
+        while (true) {
+            choice = scanner.nextInt();
+
+            if (choice >= 1 && choice <= 3) {
+                break;
+            } else {
+                System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+            }
+        }
+
 
         System.out.println("Enter serial.");
         serial = scanner.next();
-
+        scanner.nextLine();
         System.out.println("Enter product name.");
-        product_name = scanner.next();
+        product_name = scanner.nextLine();
 
         System.out.println("Enter product stock.");
         stock = scanner.nextInt();

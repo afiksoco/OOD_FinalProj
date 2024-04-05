@@ -65,24 +65,17 @@ public class SoldThroughWebsite extends Product implements Shipable {
 		this.destCountry = destCountry;
 	}
 
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
 
 	@Override
+
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString())
-				.append("Destination Country: ").append(destCountry).append("\n")
-				// .append("Shipping Type: ").append(shippingType).append("\n") idk atm
-				.append("Currency: ").append(currency).append("\n")
-				.append("Express Shipping: ").append(expressShipping).append("\n")
-				.append("Standard Shipping: ").append(standardShipping).append("\n");
-		return sb.toString();
+		String resetColorCode = "\u001B[0m";
+		String colorCode = "\u001B[35m";
+		return super.toString() +
+				String.format("%-15s %-20s %-20s",
+					colorCode +	destCountry,  colorCode + expressShipping,  colorCode +  standardShipping + resetColorCode);
 	}
+
+
 
 }

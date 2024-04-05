@@ -103,14 +103,33 @@ public class Product implements Comparable{
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Product: ").append(product_name).append("\n")
-                .append("Serial: ").append(serial).append("\n")
-                .append("Cost Price: ").append(cost_price).append(" ").append(currency).append("\n")
-				.append("Selling Price: ").append(selling_price).append("\n")
-				.append("Stock: ").append(stock).append("\n");
-		return sb.toString();
+		String productType = getClass().getSimpleName();
+		String colorCode = "";
+		switch(productType) {
+			case "SoldToWholesalers":
+				colorCode = "\u001B[34m"; // Blue color
+				break;
+			case "SoldThroughWebsite":
+				colorCode = "\u001B[35m"; // Purple color
+				break;
+			case "SoldInStore":
+				colorCode = "\u001B[32m";
+				break;
+			// Add more cases for other product types if needed
+			default:
+				colorCode = "\u001B[0m"; // Default color (reset)
+		}
+		String resetColorCode = "\u001B[0m"; // Reset color
+		return String.format("%-25s %-25s %-15s %-15s %-15s %-10s",
+				colorCode + productType + resetColorCode,
+				colorCode + product_name + resetColorCode,
+				colorCode + serial + resetColorCode,
+				colorCode + cost_price + " " + currency + resetColorCode,
+				colorCode + selling_price + " " + currency + resetColorCode,
+				colorCode + stock + resetColorCode);
+
 	}
+
 
 
 

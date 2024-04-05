@@ -48,11 +48,11 @@ public class Program {
                     break;
                 case "7":
                     // Implement show product details by serial functionality
-                    store.showAllProducts();
-
                     break;
                 case "8":
                     // 'Implement show all available products functionality
+                    store.getAllProducts().add(new SoldInStore("afik", "afik", 4, 8 , 77));
+                    store.showAllProducts();
                     break;
                 case "9":
                     // Implement show all product orders functionality
