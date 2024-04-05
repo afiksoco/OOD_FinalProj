@@ -87,6 +87,8 @@ public class Product implements Comparable{
 	}
 
 
+
+
 	@Override
 	public int compareTo(Object other) {
 		if (this == other)
@@ -120,7 +122,7 @@ public class Product implements Comparable{
 				colorCode = "\u001B[0m"; // Default color (reset)
 		}
 		String resetColorCode = "\u001B[0m"; // Reset color
-		return String.format("%-29s %-29s %-24s %-24s %-24s %-19s",
+		return String.format("%-29s %-29s %-24s %-24s %-24s %-20s",
 				colorCode + productType + resetColorCode,
 				colorCode + product_name + resetColorCode,
 				colorCode + serial + resetColorCode,

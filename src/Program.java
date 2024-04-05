@@ -35,9 +35,11 @@ public class Program {
                     store.addProductToStore();
                     break;
                 case "3":
+                    store.removeProductBySerial();
                     // Implement delete product functionality
                     break;
                 case "4":
+                    store.updateProductStock();
                     // Implement update product stock functionality
                     break;
                 case "5":
@@ -52,7 +54,7 @@ public class Program {
                 case "8":
                     // 'Implement show all available products functionality
                     store.getAllProducts().add(new SoldInStore("d", "aaasdasdik", 4, 8 , 77));
-                    store.getAllProducts().add(new SoldThroughWebsite("d", "xcdik", 4, 8 , 77, " israel", true, false  ));
+                    store.getAllProducts().add(new SoldThroughWebsite("d", "xcdik", 4, 8 , 77, "asdasdewrdfs", true, false  ));
 
                     store.showAllProducts();
                     break;

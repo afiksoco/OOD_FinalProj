@@ -72,7 +72,7 @@ public class SoldThroughWebsite extends Product implements Shipable {
 		String resetColorCode = "\u001B[0m";
 		String colorCode = "\u001B[35m";
 		return super.toString() +
-				String.format("%-21s %-25s %-20s",
+				String.format("%-20s %-25s %-20s",
 					colorCode +	destCountry,  colorCode + expressShipping,  colorCode +  standardShipping + resetColorCode);
 	}
 
