@@ -99,6 +99,7 @@ public class Store {
         for (Product product : allProducts) {
             if (productType.isInstance(product)) {
                 System.out.println(product);
+
             }
         }
     }
