@@ -26,7 +26,6 @@ public class Program {
             System.out.print("Enter your choice: ");
 
             choice = scanner.next();
-
             switch (choice) {
                 case "1":
                     hardcoded();
@@ -47,16 +46,16 @@ public class Program {
                     // Implement make product order functionality
                     break;
                 case "6":
+                    store.undoOrder();
                     // Implement undo last order functionality
                     break;
                 case "7":
+                    store.showDetailedProductInfo();
                     // Implement show product details by serial functionality
                     break;
                 case "8":
                     // 'Implement show all available products functionality
-                    store.getAllProducts().add(new SoldInStore("d", "aaasdasdik", 4, 8 , 77));
-                    store.getAllProducts().add(new SoldThroughWebsite("d", "xcdik", 4, 8 , 77, "asdasdewrdfs", true, false  ));
-                    store.showAllProducts();
+                    store.showAllProducts(Product.class);
                     break;
                 case "9":
                     // Implement show all product orders functionality
@@ -74,12 +73,16 @@ public class Program {
             }
         } while (!choice.equals("e") && !choice.equals("E"));
         scanner.close();
-
-
     }
 
     private static void hardcoded() {
         // TODO Auto-generated method stub
+        store.getAllProducts().add(new SoldInStore("Spoon", "popo", 300, 333 , 12));
+        store.getAllProducts().add(new SoldInStore("Watch", "zzz", 4, 8 , 268));
+        store.getAllProducts().add(new SoldToWholesalers("PC", "abc", 88, 99 , 34));
+        store.getAllProducts().add(new SoldToWholesalers("Keyboard", "bzc", 88, 99 , 94));
+        store.getAllProducts().add(new SoldThroughWebsite("Fork", "koko", 88, 100 , 32, "Israel", true, true  ));
+        store.getAllProducts().add(new SoldThroughWebsite("Tami", "arba", 200, 250 , 77, "Israel", true, false  ));
 
     }
 }

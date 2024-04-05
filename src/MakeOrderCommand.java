@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 public class MakeOrderCommand implements Command {
     private Product product;
+    private int previousAmount;
+    private  int previousProfit;
+
     public static Scanner scanner = new Scanner(System.in);
 
     public MakeOrderCommand(Product product) {
@@ -28,6 +31,10 @@ public class MakeOrderCommand implements Command {
 
         Order newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
         if (product.getAllOrders().add(newOrder)) {
+            product.setProfit(Calculator.calcProductProfit(product,amount));
+
+            previousProfit = product.getProfit();
+            previousAmount = product.getStock();
             product.setStock(product.getStock() - amount);
             System.out.println("Order received! order details :");
             System.out.println(newOrder);
@@ -37,6 +44,7 @@ public class MakeOrderCommand implements Command {
 
     @Override
     public void undo() {
-
+        product.setStock(previousAmount);
+        product.setProfit(previousProfit);
     }
 }

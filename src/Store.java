@@ -89,25 +89,15 @@ public class Store {
             System.out.println("Product added succ");
     }
 
-    /* public void showAllProducts() {// productTYPE: 20 , pName : 20, serial 15, cost 9, sell 9
-         System.out.printf("%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
-                 "Product type",
-                 "Product name", "Serial", "Cost price", "Selling price", "Stock",
-                 "Destination", "Standard shipment", "Express shipment");
-         for (Product product : allProducts) {
-             System.out.println(product);
-         }
-     }
- */
-    public <T extends Product> void showAllProducts(T productType) {
+
+    public <T extends Product> void showAllProducts(Class <T> productType) {
 
         System.out.printf("%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
                 "Product type",
                 "Product name", "Serial", "Cost price", "Selling price", "Stock",
                 "Destination", "Standard shipment", "Express shipment");
         for (Product product : allProducts) {
-
-            if (product.getClass().getSimpleName().equals(productType.getClass().getSimpleName())) {
+            if (productType.isInstance(product)) {
                 System.out.println(product);
             }
         }
@@ -145,6 +135,25 @@ public class Store {
                 System.out.println("Product's stock updated to " + newAmount + "!");
             }
 
+        }
+    }
+
+    public void undoOrder() {
+        if (!stack.isEmpty()) {
+            Command cmd = stack.pop();
+            cmd.undo();
+        }
+        else {
+            System.out.println("No previous orders.");
+
+        };
+    }
+
+    public void showDetailedProductInfo() {
+        System.out.println("Enter serial to see detailed info of a product.");
+        Product p = infoForProduct();
+        if (p != null){
+            p.showDetailedInfo();
         }
     }
 }
