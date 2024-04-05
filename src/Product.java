@@ -1,3 +1,4 @@
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 public class Product implements Comparable{
@@ -9,7 +10,7 @@ public class Product implements Comparable{
 	private int cost_price; // for the store
 	private int selling_price; // for costumer
 	private int stock;
-	private Order allOrders; // LinkedHashset / ArrayList ?
+	private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
 	private String currency;
 
 
@@ -23,7 +24,11 @@ public class Product implements Comparable{
 		this.stock = stock;
 		this.currency = currency;
 	}
-	
+	public void orderProduct(){
+		System.out.println();
+		MakeOrderCommand command = new MakeOrderCommand(this);
+
+	}
 	public String getProduct_name() {
 		return product_name;
 	}
@@ -133,6 +138,7 @@ public class Product implements Comparable{
 	}
 
 
-
-
+	public LinkedHashSet<Order> getAllOrders() {
+		return allOrders;
+	}
 }

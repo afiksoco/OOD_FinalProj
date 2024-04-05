@@ -43,6 +43,7 @@ public class Program {
                     // Implement update product stock functionality
                     break;
                 case "5":
+                    store.createNewOrder();
                     // Implement make product order functionality
                     break;
                 case "6":
@@ -55,7 +56,6 @@ public class Program {
                     // 'Implement show all available products functionality
                     store.getAllProducts().add(new SoldInStore("d", "aaasdasdik", 4, 8 , 77));
                     store.getAllProducts().add(new SoldThroughWebsite("d", "xcdik", 4, 8 , 77, "asdasdewrdfs", true, false  ));
-
                     store.showAllProducts();
                     break;
                 case "9":
