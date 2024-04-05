@@ -120,7 +120,7 @@ public class Product implements Comparable{
 				colorCode = "\u001B[0m"; // Default color (reset)
 		}
 		String resetColorCode = "\u001B[0m"; // Reset color
-		return String.format("%-25s %-25s %-15s %-15s %-15s %-10s",
+		return String.format("%-29s %-29s %-24s %-24s %-24s %-19s",
 				colorCode + productType + resetColorCode,
 				colorCode + product_name + resetColorCode,
 				colorCode + serial + resetColorCode,

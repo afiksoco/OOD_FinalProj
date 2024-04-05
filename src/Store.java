@@ -29,7 +29,7 @@ public class Store {
     }
 
     public void showAllProducts() {
-        System.out.printf("%-20s %-20s %-10s %-15s %-15s %-10s %-15s %-20s %-20s\n",
+        System.out.printf("%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
                 "Product type",
                 "Product name", "Serial", "Cost price", "Selling price", "Stock",
                 "Destination", "Standard shipment", "Express shipment");

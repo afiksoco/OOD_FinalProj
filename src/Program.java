@@ -51,7 +51,9 @@ public class Program {
                     break;
                 case "8":
                     // 'Implement show all available products functionality
-                    store.getAllProducts().add(new SoldInStore("afik", "afik", 4, 8 , 77));
+                    store.getAllProducts().add(new SoldInStore("d", "aaasdasdik", 4, 8 , 77));
+                    store.getAllProducts().add(new SoldThroughWebsite("d", "xcdik", 4, 8 , 77, " israel", true, false  ));
+
                     store.showAllProducts();
                     break;
                 case "9":
