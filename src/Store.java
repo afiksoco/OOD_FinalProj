@@ -80,9 +80,7 @@ public class Store {
         return allProducts;
     }
 
-    public void setAllProducts(Set<Product> allProducts) {
-        this.allProducts = allProducts;
-    }
+
 
     public void addProductToStore() {
         if (allProducts.add(ProductFactory.createProduct()))
@@ -147,7 +145,7 @@ public class Store {
         else {
             System.out.println("No previous orders.");
 
-        };
+        }
     }
 
     public void showDetailedProductInfo() {
