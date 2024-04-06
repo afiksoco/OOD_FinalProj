@@ -1,4 +1,4 @@
-public class SoldInStore extends Product implements Invoiceable{
+public class SoldInStore extends Product implements CostumerInvoiceable, AccountantInvoiceable {
 
 
 	

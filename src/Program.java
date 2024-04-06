@@ -55,7 +55,7 @@ public class Program {
                     break;
                 case "8":
                     // 'Implement show all available products functionality
-                    store.showAllProducts(Product.class);
+                    store.showSystem();
                     break;
                 case "9":
                     // Implement show all product orders functionality
@@ -77,6 +77,7 @@ public class Program {
     }
 
     private static void hardcoded() {
+
         // TODO Auto-generated method stub
         store.getAllProducts().add(new SoldInStore("Spoon", "popo", 300, 333 , 12));
         store.getAllProducts().add(new SoldInStore("Watch", "zzz", 4, 8 , 268));

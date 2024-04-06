@@ -1,7 +1,7 @@
 import java.util.LinkedHashSet;
 import java.util.Objects;
 
-public class Product implements Comparable {
+public abstract class Product implements Comparable {
 
 
     private String product_name;
@@ -11,7 +11,7 @@ public class Product implements Comparable {
     private int stock;
     private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
     private String currency;
-    private int totalProfit ;
+    private int totalProfit;
 
 
     public Product(String product_name, String serial, int cost_price, int selling_price, int stock, String currency) {
@@ -144,40 +144,50 @@ public class Product implements Comparable {
 
     public void showDetailedInfo() {
         System.out.println(this);
-        if(allOrders.isEmpty()){
+        if (allOrders.isEmpty()) {
             System.out.println("No orders for this product!");
             return;
         }
-        showAllOrders();
-        System.out.println("Total profits from orders : "+ getProfit() + " "+ currency);
+        showAllOrdersAndInvoices();
+        System.out.println("Total profits from orders : " + getProfit() + " " + currency);
 
     }
 
 
-    public void showAllOrders() {
+    public void showAllOrdersAndInvoices() {
         printTableFormat();
-        for (Order o : allOrders)
+        for (Order o : allOrders) {
             System.out.println(o);
+            o.showInvoice();
+        }
     }
-    public void printTableFormat(){
+
+    public void showAllOrders(){
+        printTableFormat();
+        for (Order o : allOrders) {
+            System.out.println(o);
+        }
+    }
+
+    public void printTableFormat() {
         System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
 
     }
-    
+
     public void profitPerOrder() {
-    	int profit = 0;
-    	for (Order o : allOrders) {
-    		profit = (selling_price-cost_price)*o.getAmount();
-    		System.out.println(o + " profit is: "+ profit + " " + currency);
-    	}
+        int profit = 0;
+        for (Order o : allOrders) {
+            profit = (selling_price - cost_price) * o.getAmount();
+            System.out.println(o + " profit is: " + profit + " " + currency);
+        }
     }
 
     public int getProfit() {
-        return  totalProfit;
+        return totalProfit;
     }
 
-    public String getCurrency(){
-        return  currency;
+    public String getCurrency() {
+        return currency;
     }
 
     public void setProfit(int profit) {

@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MakeOrderCommand implements Command {
     private Product product;
     private int previousAmount;
     private int previousProfit;
+
+    private List<OrderObserver> observers = new ArrayList<>();
 
     public static Scanner scanner = new Scanner(System.in);
 
@@ -29,7 +33,24 @@ public class MakeOrderCommand implements Command {
             return;
         }
 
-        Order newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
+        Order newOrder;
+        if (product instanceof SoldThroughWebsite) {
+            SoldThroughWebsite soldThroughWebsiteProduct = (SoldThroughWebsite) product;
+            System.out.println("Choose shipping method from available methods: ");
+
+            if (soldThroughWebsiteProduct.getExpressShipping()) {
+                System.out.println("1. Express Shipping");
+            }
+            if (soldThroughWebsiteProduct.getStandardShipping()) {
+                System.out.println("2. Standard Shipping");
+            }
+            newOrder = new WebsiteOrder(product, new Customer("aaa", "0526410559"),
+                    amount, serial, WebsiteOrder.ShipmentMethod.EXPRESS ); // need to ask from user.. only checking
+            ShipmentCompany shipmentCompany = notifyObservers(newOrder);
+
+        } else {
+            newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
+        }
         previousProfit = product.getProfit();
         if (product.getAllOrders().add(newOrder)) {
             product.setProfit(Calculator.calcProductTotalProfit(product, amount));
@@ -44,6 +65,7 @@ public class MakeOrderCommand implements Command {
 
     }
 
+
     @Override
     public void undo() {
         product.setStock(previousAmount);
@@ -52,6 +74,33 @@ public class MakeOrderCommand implements Command {
         for (Order order : product.getAllOrders()) {
             lastOrder = order;
         }
+        System.out.println("Order #" + lastOrder.getSerial() + " cancelled successfully!");
+
         product.getAllOrders().remove(lastOrder);
     }
+
+    public void addObserver(OrderObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(OrderObserver observer) {
+        observers.remove(observer);
+    }
+
+    private ShipmentCompany notifyObservers(Order order) {
+        System.out.println("Notifying shipping companies... ");
+        System.out.println("Checking for best price... ");
+        int maxPrice = Integer.MIN_VALUE; // Initialize to the lowest possible value
+        ShipmentCompany bestCompany = null;
+
+        for (OrderObserver observer : observers) {
+            int price = observer.shippingPrice(order);
+            if (price > maxPrice) {
+                maxPrice = price;
+                bestCompany = observer.getCompany();
+            }
+        }
+        return bestCompany;
+    }
+
 }

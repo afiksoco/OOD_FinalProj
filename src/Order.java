@@ -11,7 +11,9 @@ public class Order {
 
 	private  int cost;
 
-	private Invoice invoice;
+	private FormatForCostumer invoiceForCostumer;
+	private FormatForAccountant invoiceForAccountant;
+
 
 	public Order(Product product, Customer costumer, int amount, String serial) {
 		this.product = product;
@@ -20,8 +22,17 @@ public class Order {
 		this.serial = serial;
 		this.profit = Calculator.calcOrderProfit(product, amount);
 		this.cost = Calculator.calcTotalOrderCost(this);
+		this.invoiceForAccountant = InvoiceFactory.createAccountantInvoice(this);
+		this.invoiceForCostumer = InvoiceFactory.createCostumerInvoice(this);
+
 	}
 
+	public void showInvoice(){
+		if (product instanceof AccountantInvoiceable)
+			System.out.println(invoiceForAccountant);
+		if (product instanceof CostumerInvoiceable)
+			System.out.println(invoiceForCostumer);
+	}
 
 	public String getSerial() {
 		return serial;

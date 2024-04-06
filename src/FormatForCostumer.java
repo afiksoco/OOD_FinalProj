@@ -1,12 +1,12 @@
 public class FormatForCostumer extends  Invoice{
-
+    double taxes;
     public FormatForCostumer(Order order) {
         super(order);
+        this.taxes = Calculator.calcTaxesForOrder(order);
     }
 
     @Override
     public String toString() {
-        return super.toString() + ", total cost :  " + Calculator.calcTotalCostForCostumer(order.getProduct(), order.getAmount())
-        + " " + order.getProduct().getCurrency() + ", taxes : " + Calculator.calcTaxesForOrder(order);
+        return super.toString()  + ", taxes : " + taxes +" " + order.getProduct().getCurrency()+ ", date " +formattedDateTime;
     }
 }
