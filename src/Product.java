@@ -155,6 +155,14 @@ public class Product implements Comparable {
             System.out.println(o);
 
     }
+    
+    public void profitPerOrder() {
+    	int profit = 0;
+    	for (Order o : allOrders) {
+    		profit = (selling_price-cost_price)*o.getAmount();
+    		System.out.println(o + " profit is: "+ profit + " " + currency);
+    	}
+    }
 
     public int getProfit() {
         return  totalProfit;

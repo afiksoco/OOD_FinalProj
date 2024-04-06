@@ -1,3 +1,4 @@
+import java.util.Currency;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.Stack;
@@ -151,8 +152,16 @@ public class Store {
     public void showDetailedProductInfo() {
         System.out.println("Enter serial to see detailed info of a product.");
         Product p = infoForProduct();
-        if (p != null){
+        if (p != null)
             p.showDetailedInfo();
-        }
+    }
+    
+    public void showAllOrdersForProduct() {
+    	System.out.println("Enter serial to see all the orders for specific product.");
+    	Product p = infoForProduct();
+    	if(p != null) {
+    		p.profitPerOrder();
+    		System.out.println("Store total profit for this product is : "+p.getProfit());
+    	}
     }
 }

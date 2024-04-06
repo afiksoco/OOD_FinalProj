@@ -59,6 +59,7 @@ public class Program {
                     break;
                 case "9":
                     // Implement show all product orders functionality
+                	store.showAllOrdersForProduct();
                     break;
                 case "10":
                     // Implement save system functionality
