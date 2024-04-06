@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class MakeOrderCommand implements Command {
     private Product product;
     private int previousAmount;
-    private  int previousProfit;
+    private int previousProfit;
 
     public static Scanner scanner = new Scanner(System.in);
 
@@ -30,13 +30,15 @@ public class MakeOrderCommand implements Command {
         }
 
         Order newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
+        previousProfit = product.getProfit();
         if (product.getAllOrders().add(newOrder)) {
-            product.setProfit(Calculator.calcProductProfit(product,amount));
+            product.setProfit(Calculator.calcProductTotalProfit(product, amount));
 
-            previousProfit = product.getProfit();
+
             previousAmount = product.getStock();
             product.setStock(product.getStock() - amount);
-            System.out.println("Order received! order details :");
+            System.out.println("Order received!");
+            product.printTableFormat();
             System.out.println(newOrder);
         }
 
@@ -46,5 +48,10 @@ public class MakeOrderCommand implements Command {
     public void undo() {
         product.setStock(previousAmount);
         product.setProfit(previousProfit);
+        Order lastOrder = null;
+        for (Order order : product.getAllOrders()) {
+            lastOrder = order;
+        }
+        product.getAllOrders().remove(lastOrder);
     }
 }

@@ -21,7 +21,7 @@ public class Product implements Comparable {
         this.selling_price = selling_price;
         this.stock = stock;
         this.currency = currency;
-        totalProfit = 0;
+        this.totalProfit = 0;
 
     }
 
@@ -144,6 +144,10 @@ public class Product implements Comparable {
 
     public void showDetailedInfo() {
         System.out.println(this);
+        if(allOrders.isEmpty()){
+            System.out.println("No orders for this product!");
+            return;
+        }
         showAllOrders();
         System.out.println("Total profits from orders : "+ getProfit() + " "+ currency);
 
@@ -151,8 +155,12 @@ public class Product implements Comparable {
 
 
     public void showAllOrders() {
+        printTableFormat();
         for (Order o : allOrders)
             System.out.println(o);
+    }
+    public void printTableFormat(){
+        System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
 
     }
     
@@ -168,8 +176,12 @@ public class Product implements Comparable {
         return  totalProfit;
     }
 
-    public void setProfit(int totalProfit) {
-        this.totalProfit = totalProfit;
+    public String getCurrency(){
+        return  currency;
+    }
+
+    public void setProfit(int profit) {
+        this.totalProfit = profit;
     }
 }
 

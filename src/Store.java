@@ -31,6 +31,15 @@ public class Store {
         }
     }
 
+    public <T extends Product> boolean checkIfListHasType(Class<T> productType) {
+        for (Product product : allProducts) {
+            if (productType.isInstance(product)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void createNewOrder() {
         System.out.println("Choose type on product.\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
@@ -47,13 +56,28 @@ public class Store {
 
         switch (choice) {
             case 1:
-                showAllProducts(SoldThroughWebsite.class);
+                if (checkIfListHasType(SoldThroughWebsite.class))
+                    showAllProducts(SoldThroughWebsite.class);
+                else {
+                    System.out.println("There isn't product of this type! Exiting...");
+                    return;
+                }
                 break;
             case 2:
-                showAllProducts(SoldInStore.class);
+                if (checkIfListHasType(SoldInStore.class))
+                    showAllProducts(SoldInStore.class);
+                else {
+                    System.out.println("There isn't product of this type! Exiting...");
+                    return;
+                }
                 break;
             case 3:
-                showAllProducts(SoldToWholesalers.class);
+                if (checkIfListHasType(SoldToWholesalers.class))
+                    showAllProducts(SoldToWholesalers.class);
+                else {
+                    System.out.println("There isn't product of this type! Exiting...");
+                    return;
+                }
                 break;
             default:
                 break;
@@ -82,25 +106,27 @@ public class Store {
     }
 
 
-
     public void addProductToStore() {
         if (allProducts.add(ProductFactory.createProduct()))
             System.out.println("Product added succ");
     }
 
 
-    public <T extends Product> void showAllProducts(Class <T> productType) {
-
-        System.out.printf("%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
-                "Product type",
-                "Product name", "Serial", "Cost price", "Selling price", "Stock",
-                "Destination", "Standard shipment", "Express shipment");
+    public <T extends Product> void showAllProducts(Class<T> productType) {
+        printTableFormat();
         for (Product product : allProducts) {
             if (productType.isInstance(product)) {
                 System.out.println(product);
 
             }
         }
+    }
+
+    public void printTableFormat() {
+        System.out.printf("%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
+                "Product type",
+                "Product name", "Serial", "Cost price", "Selling price", "Stock",
+                "Destination", "Standard shipment", "Express shipment");
     }
 
 
@@ -124,17 +150,12 @@ public class Store {
             System.out.println("Currect amount : " + p.getStock());
             System.out.println("Enter new amount : ");
             newAmount = scanner.nextInt();
-            if (newAmount == 0) {
-                allProducts.remove(p);
-                System.out.println("Product removed from store!");
-            } else if (newAmount < 0) {
+            if (newAmount < 0)
                 System.out.println("Invalid amount! Exiting...");
-
-            } else {
+            else {
                 p.setStock(newAmount);
                 System.out.println("Product's stock updated to " + newAmount + "!");
             }
-
         }
     }
 
@@ -142,26 +163,42 @@ public class Store {
         if (!stack.isEmpty()) {
             Command cmd = stack.pop();
             cmd.undo();
-        }
-        else {
+        } else {
             System.out.println("No previous orders.");
 
         }
     }
 
     public void showDetailedProductInfo() {
+        if (allProducts.isEmpty()) {
+            System.out.println("Add some products first! Exiting...");
+            return;
+        }
+        showAllProducts(Product.class);
+
         System.out.println("Enter serial to see detailed info of a product.");
         Product p = infoForProduct();
-        if (p != null)
+        if (p != null) {
+            printTableFormat();
             p.showDetailedInfo();
+        }
     }
-    
+
     public void showAllOrdersForProduct() {
-    	System.out.println("Enter serial to see all the orders for specific product.");
-    	Product p = infoForProduct();
-    	if(p != null) {
-    		p.profitPerOrder();
-    		System.out.println("Store total profit for this product is : "+p.getProfit());
-    	}
+        if (allProducts.isEmpty()) {
+            System.out.println("Add some products first! Exiting...");
+            return;
+        }
+        showAllProducts(Product.class);
+        System.out.println("Enter serial to see all the orders for specific product.");
+        Product p = infoForProduct();
+        if (p != null) {
+            if (p.getAllOrders().isEmpty()) {
+                System.out.println("No current orders for this product!");
+                return;
+            }
+            p.showAllOrders();
+            System.out.println("Store total profit for this product is : " + p.getProfit() + " " + p.getCurrency());
+        }
     }
 }

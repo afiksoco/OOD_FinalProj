@@ -7,25 +7,42 @@ public class Order {
 	private Customer costumer;
 	private int amount;
 	private  String serial;
+	private  int profit;
 
+	private  int cost;
+
+	private Invoice invoice;
 
 	public Order(Product product, Customer costumer, int amount, String serial) {
 		this.product = product;
 		this.costumer = costumer;
 		this.amount = amount;
 		this.serial = serial;
+		this.profit = Calculator.calcOrderProfit(product, amount);
+		this.cost = Calculator.calcTotalOrderCost(this);
 	}
-	
+
+
+	public String getSerial() {
+		return serial;
+	}
+
 	public Product getProduct() {
 		return product;
 	}
-	
-	
+
+	public int getProfit() {
+		return profit;
+	}
+
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
+
+	public int getCost() {
+		return cost;
+	}
+
 	public Customer getCostumer() {
 		return costumer;
 	}
@@ -76,7 +93,8 @@ public class Order {
 
 
 	@Override
-	public String toString() {
-		return "Order serial ID  : " + serial;
+		public String toString() {
+			return String.format("%-20s %-20s %-15s", serial, product.getProduct_name(), profit + " " + product.getCurrency());
+		}
 	}
-}
+
