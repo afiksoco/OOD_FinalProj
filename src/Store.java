@@ -9,8 +9,8 @@ public class Store {
     private Set<Product> allProducts = new TreeSet<>(); //sort by String
     private static Store instance;
     private static Stack<Command> stack = new Stack<>();
-    private FedEx fedEx = new FedEx("Afik", "0526410559");
-    private DHL DHL   = new DHL("soco", " 41564685132");
+/*    private FedEx fedEx = new FedEx("Afik", "0526410559");
+    private DHL DHL   = new DHL("soco", " 41564685132");*/
 
 
 
@@ -89,8 +89,8 @@ public class Store {
         Product p = infoForProduct();
         if (p != null) {
             MakeOrderCommand command = new MakeOrderCommand(p);
-            command.addObserver(DHL);
-            command.addObserver(fedEx);
+         //   command.addObserver(DHL);
+         //   command.addObserver(fedEx);
             command.execute();
             stack.add(command);
         }

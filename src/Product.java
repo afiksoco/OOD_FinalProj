@@ -13,8 +13,10 @@ public abstract class Product implements Comparable {
     private String currency;
     private int totalProfit;
 
+    int weight ;
 
-    public Product(String product_name, String serial, int cost_price, int selling_price, int stock, String currency) {
+
+    public Product(String product_name, String serial, int cost_price, int selling_price,int weight, int stock, String currency) {
         this.product_name = product_name;
         this.serial = serial;
         this.cost_price = cost_price;
@@ -22,6 +24,7 @@ public abstract class Product implements Comparable {
         this.stock = stock;
         this.currency = currency;
         this.totalProfit = 0;
+        this.weight = weight;
 
     }
 
@@ -174,12 +177,14 @@ public abstract class Product implements Comparable {
 
     }
 
-    public void profitPerOrder() {
-        int profit = 0;
+    public void calcTotalProfit() {
+        int profit;
+        int total = 0;
         for (Order o : allOrders) {
             profit = (selling_price - cost_price) * o.getAmount();
-            System.out.println(o + " profit is: " + profit + " " + currency);
+            total += profit;
         }
+        this.totalProfit = total;
     }
 
     public int getProfit() {

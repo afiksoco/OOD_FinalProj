@@ -5,7 +5,7 @@ public class ProductFactory {
 
     public static Product createProduct() {
         String serial, product_name;
-        int choice, cost_price, selling_price, stock;
+        int choice, cost_price, selling_price, stock, weight;
 
         Product p = null;
 
@@ -32,6 +32,9 @@ public class ProductFactory {
         System.out.println("Enter product stock.");
         stock = scanner.nextInt();
 
+        System.out.println("Enter product weight.");
+        weight = scanner.nextInt();
+
         switch (choice) {
             case 1:
                 cost_price = getCostPrice(false);
@@ -49,7 +52,7 @@ public class ProductFactory {
 
                 System.out.println("Does the product has standard shipping? (True/False)");
                 standard = scanner.nextBoolean();
-                p = new SoldThroughWebsite(product_name, serial, cost_price, selling_price, stock, destCountry, express, standard);
+                p = new SoldThroughWebsite(product_name, serial, cost_price, selling_price,weight, stock, destCountry, express, standard);
                 break;
 
             case 2:
@@ -57,14 +60,14 @@ public class ProductFactory {
 
                 selling_price =  getSellPrice(true);
 
-                p = new SoldInStore(product_name, serial, cost_price, selling_price, stock);
+                p = new SoldInStore(product_name, serial, cost_price, selling_price,weight, stock);
                 break;
             case 3:
                 cost_price = getCostPrice(true);
 
                 selling_price =  getSellPrice(true);
 
-                p = new SoldToWholesalers(product_name, serial, cost_price, selling_price, stock);
+                p = new SoldToWholesalers(product_name, serial, cost_price, selling_price,weight, stock);
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
