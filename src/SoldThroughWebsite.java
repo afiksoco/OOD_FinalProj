@@ -2,7 +2,7 @@ public class SoldThroughWebsite extends Product implements Shipable {
 
 
 	private String destCountry;
-	private ShippingType shippingType;
+	//private ShippingType shippingType;
 	private Boolean expressShipping;
     private Boolean standardShipping;
 
@@ -35,33 +35,33 @@ public class SoldThroughWebsite extends Product implements Shipable {
 		this.standardShipping = standardShipping;
 	}
 
-	public ShippingType getShippingType() {
-		return shippingType;
-	}
-	
-	public void setShippingType(ShippingType shippingType) {
-		this.shippingType = shippingType;
-	}
+//	public ShippingType getShippingType() {
+//		return shippingType;
+//	}
+//	
+//	public void setShippingType(ShippingType shippingType) {
+//		this.shippingType = shippingType;
+//	}
 	
 	
 	public void ship(ShippingType shippingType) {
-		if (shippingType != null) {
-			double shippingFees = 0.0;
-			if (isExpressShipping(shippingType)) {
-				shippingFees = shippingType.calculateExpressShippingFees();
-			} else {
-				shippingFees = shippingType.calculateStandardShippingFees();
-			}
-			System.out.println("For shipping method " + (isExpressShipping(shippingType) ? "Express" : "Regular")
-					+ " the shipping fees is: " + shippingFees);
-		} else {
-			System.out.println("Shipping type is not set.");
-		}
+//		if (shippingType != null) {
+//			double shippingFees = 0.0;
+//			if (isExpressShipping(shippingType)) {
+//				shippingFees = shippingType.calculateExpressShippingFees();
+//			} else {
+//				shippingFees = shippingType.calculateStandardShippingFees();
+//			}
+//			System.out.println("For shipping method " + (isExpressShipping(shippingType) ? "Express" : "Regular")
+//					+ " the shipping fees is: " + shippingFees);
+//		} else {
+//			System.out.println("Shipping type is not set.");
+//		}
 	}
 
-	public boolean isExpressShipping(ShippingType shippingType) {
-		return shippingType instanceof FedExShipping || shippingType instanceof DHLShipping;
-	}
+//	public boolean isExpressShipping(ShippingType shippingType) {
+//		return shippingType instanceof FedExShipping || shippingType instanceof DHLShipping;
+//	}
 
 	public String getDestCountry() {
 		return destCountry;

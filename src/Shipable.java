@@ -1,3 +1,3 @@
 public interface Shipable {
-	void ship(ShippingType shippingType);
+	//void ship(ShippingType shippingType);
 }
