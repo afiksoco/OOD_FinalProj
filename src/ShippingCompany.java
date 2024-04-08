@@ -1,4 +1,4 @@
-public abstract class  ShippingCompany implements OrderObserver{
+public abstract class  ShippingCompany implements Observer {
     private String contact;
     private String phoneNumber;
 	//private ShippingType shippingType;
@@ -11,13 +11,6 @@ public abstract class  ShippingCompany implements OrderObserver{
 		public ShippingCompany getCompany(){
 		return this;
 		}
-//	   public double calculateStandardShippingCost() {
-//	        return shippingType.calculateStandardShippingFees();
-//	    }
-//
-//	    public double calculateExpressShippingCost() {
-//	        return shippingType.calculateExpressShippingFees();
-//	    }
 
 		public String getPhoneNumber() {
 			return phoneNumber;
@@ -36,5 +29,5 @@ public abstract class  ShippingCompany implements OrderObserver{
 		}
 
 		@Override
-		public abstract int shippingPrice(Order order);
+		public abstract double shippingPrice(WebsiteOrder order);
 }

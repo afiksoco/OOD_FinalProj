@@ -1,19 +1,18 @@
 
 public class ShippingMethod {
 	
-	private int shippingFees;
+	private double shippingFees;
 
-	public ShippingMethod(int shippingFees) {
-		super();
+	public ShippingMethod(double shippingFees) {
 		this.shippingFees = shippingFees;
 	}
 
 
-	public int getShippingFees() {
+	public double	 getShippingFees() {
 		return shippingFees;
 	}
 
-	public void setShippingFees(int shippingFees) {
+	public void setShippingFees(double shippingFees) {
 		this.shippingFees = shippingFees;
 	}
 }

@@ -3,121 +3,137 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MakeOrderCommand implements Command {
-	private Product product;
-	private int previousAmount;
-	private int previousProfit;
+    private Product product;
+    private int previousAmount;
+    private int previousProfit;
 
-	private List<OrderObserver> observers = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
-	public static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
 
-	public MakeOrderCommand(Product product) {
-		this.product = product;
-	}
+    public MakeOrderCommand(Product product) {
+        this.product = product;
+    }
 
-	@Override
-	public void execute() {
-		System.out.println("Enter serial ID for the order : ");
-		String serial = scanner.next();
-		System.out.println("Enter amount : (current available amount : " + product.getStock() + " )");
-		int amount;
-		do {
-			amount = scanner.nextInt();
-			if (amount <= 0) {
-				System.out.println("Amount must be greater than 0. Please try again.");
-			}
-		} while (amount <= 0);
 
-		if (amount > product.getStock()) {
-			System.out.println("Not enough in storage... Exiting...");
-			return;
-		}
+    public boolean checkIfOrderExists(String serial) { // despite the SET class checks for duplicates, // we want to stop the order info at the begginin
+        Product p = product;
+        for (Order o : product.getAllOrders()) {
+            if (o.getSerial().equals(serial))
+                return true;
+        }
+        return false;
+    }
 
-		Order newOrder;
-		ShippingMethod chosenShipmentMethod = null;
-		ShippingCompany shippingCompany=null;
+    @Override
+    public void execute() {
+        System.out.println("Enter serial ID for the order : ");
+        String serial = scanner.next();
 
-		if (product instanceof SoldThroughWebsite) {
-			chosenShipmentMethod = getShippingMethodFromUser(product);
-			newOrder = new WebsiteOrder(product, new Customer("aaa", "0526410559"), amount, serial,
-					chosenShipmentMethod);
-			shippingCompany = notifyObservers(newOrder);
-			
-			System.out.println("\nThe order will shipped by " + shippingCompany + ".\nType of shipping: "
-					+ chosenShipmentMethod.getClass().getName()+".\nShipping fees: ");
+        if (checkIfOrderExists(serial)){
+                System.out.println("\u001B[31mFailed to take order! serial ID already exists.\u001B[0m");
+            return;
+        }
 
-		} else
-			newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
+        System.out.println("Enter amount : ( current available amount : " + product.getStock() + " )");
+        int amount;
+        do {
+            amount = scanner.nextInt();
+            if (amount <= 0) {
+                System.out.println("Amount must be greater than 0. Please try again.");
+            }
+        } while (amount <= 0);
 
-		previousProfit = product.getProfit();
-		if (product.getAllOrders().add(newOrder)) {
-			product.setProfit(Calculator.calcProductTotalProfit(product, amount));
+        if (amount > product.getStock()) {
+            System.out.println("Not enough in storage... Exiting...");
+            return;
+        }
 
-			previousAmount = product.getStock();
-			product.setStock(product.getStock() - amount);
-			System.out.println("Order received!");
-			product.printTableFormat();
-			System.out.println(newOrder);
-		}
-	}
+        Order newOrder;
 
-	@Override
-	public void undo() {
-		product.setStock(previousAmount);
-		product.setProfit(previousProfit);
-		Order lastOrder = null;
-		for (Order order : product.getAllOrders()) {
-			lastOrder = order;
-		}
-		System.out.println("Order #" + lastOrder.getSerial() + " cancelled successfully!");
 
-		product.getAllOrders().remove(lastOrder);
-	}
+        if (product instanceof SoldThroughWebsite) {
 
-	public void addObserver(OrderObserver observer) {
-		observers.add(observer);
-	}
+            ShippingMethod chosenShipmentMethod = null;
+            ShippingCompany shippingCompany = null;
+            chosenShipmentMethod = getShippingMethodFromUser(product);
+            newOrder = new WebsiteOrder(product, new Customer("aaa", "0526410559"), amount, serial,
+                    chosenShipmentMethod);
+            shippingCompany = notifyObservers((WebsiteOrder) newOrder);
+            ((WebsiteOrder) newOrder).setShippingCompany(shippingCompany);
 
-	public void removeObserver(OrderObserver observer) {
-		observers.remove(observer);
-	}
+        } else
+            newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
 
-	private ShippingCompany notifyObservers(Order order) {
-		System.out.println("Notifying shipping companies... ");
-		System.out.println("Checking for best price... ");
-		int maxPrice = Integer.MIN_VALUE; // Initialize to the lowest possible value
-		ShippingCompany bestCompany = null;
+        previousProfit = product.getProfit();
+        if (product.getAllOrders().add(newOrder)) {
+            product.setProfit(Calculator.calcProductTotalProfit(product, amount));
+            previousAmount = product.getStock();
+            product.setStock(product.getStock() - amount);
+            System.out.println("Order received!");
+            product.printTableFormat(product);
+            System.out.println(newOrder);
+        }
+    }
 
-		for (OrderObserver observer : observers) { //not entering the for!
-			int price = observer.shippingPrice(order);
-			if (price > maxPrice) {
-				maxPrice = price;
-				bestCompany = observer.getCompany();
-			}
-		}
-		return bestCompany;
-	}
+    @Override
+    public void undo() {
+        product.setStock(previousAmount);
+        product.setProfit(previousProfit);
+        Order lastOrder = null;
+        for (Order order : product.getAllOrders()) {
+            lastOrder = order;
+        }
+        System.out.println("Order #" + lastOrder.getSerial() + " cancelled successfully!");
 
-	private ShippingMethod getShippingMethodFromUser(Product product) {
-		
-		SoldThroughWebsite p  = (SoldThroughWebsite) product;
+        product.getAllOrders().remove(lastOrder);
+    }
 
-		if (p.getExpressShipping() && !p.getStandardShipping()) 
-			return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS,p.getProfit() ); // Only express shipping is available
-		else if (!p.getExpressShipping() && p.getStandardShipping())
-			return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD,p.getProfit() ); // Only standard shipping is available
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
 
-		System.out.println("Choose shipping method:");
-		int choice;
-		do {
-			System.out.println("1. Express Shipping.\n2. Standard Shipping");
-			choice = scanner.nextInt();
-		} while (choice != 1 && choice != 2);
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
 
-		if(choice == 1)
-			return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS,p.getProfit() );  
-		else
-			return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD,p.getProfit() ); // Only standard shipping is available
-	}
+    private ShippingCompany notifyObservers(WebsiteOrder order) {
+        System.out.println("Notifying shipping companies... ");
+        System.out.println("Checking for best price... ");
+        double minPrice = Integer.MAX_VALUE; // Initialize to the lowest possible value
+        Observer bestCompany = null;
+
+        for (Observer observer : observers) { //not entering the for!
+            double price = observer.shippingPrice(order);
+            if (price < minPrice) {
+                minPrice = price;
+                bestCompany = observer;
+            }
+        }
+        order.getShippingMethod().setShippingFees(minPrice);
+        return (ShippingCompany) bestCompany;
+    }
+
+    private ShippingMethod getShippingMethodFromUser(Product product) {
+
+        SoldThroughWebsite p = (SoldThroughWebsite) product;
+
+        if (p.getExpressShipping() && !p.getStandardShipping())
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS, p.getProfit());
+        else if (!p.getExpressShipping() && p.getStandardShipping())
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD, p.getProfit());
+
+        System.out.println("Choose shipping method:");
+        int choice;
+        do {
+            System.out.println("1. Express Shipping.\n2. Standard Shipping.");
+            choice = scanner.nextInt();
+        } while (choice != 1 && choice != 2);
+
+        if (choice == 1)
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS, p.getProfit());
+        else
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD, p.getProfit());
+    }
 
 }

@@ -158,7 +158,7 @@ public abstract class Product implements Comparable {
 
 
     public void showAllOrdersAndInvoices() {
-        printTableFormat();
+        printTableFormat(this);
         for (Order o : allOrders) {
             System.out.println(o);
             o.showInvoice();
@@ -166,15 +166,20 @@ public abstract class Product implements Comparable {
     }
 
     public void showAllOrders(){
-        printTableFormat();
+        printTableFormat(this);
         for (Order o : allOrders) {
             System.out.println(o);
         }
     }
 
-    public void printTableFormat() {
-        System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
+    public void printTableFormat(Product product) {
+        if (product instanceof SoldThroughWebsite){
+            System.out.printf("%-20s %-20s %-15s %-20s %-20s %-15s %-15s\n", "Order serial ID", "Product name", "Order profit"
+                    , "Shipping company", "Shipping method", "Shipping fees" , "Product cost");
 
+        }
+        else
+              System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
     }
 
     public void calcTotalProfit() {

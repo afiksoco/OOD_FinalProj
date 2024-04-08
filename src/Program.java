@@ -22,7 +22,7 @@ public class Program {
             System.out.println("8. Show All Available Products");
             System.out.println("9. Show All Product Orders");
             System.out.println("10. Save System");
-            System.out.println("11. Exit");
+            System.out.println("e/E - Exit");
             System.out.print("Enter your choice: ");
 
             choice = scanner.next();
@@ -87,7 +87,7 @@ public class Program {
         Product p6 = new SoldToWholesalers("Keyboard", "bzc", 88, 99 ,2, 94);
         Product p7 = new SoldThroughWebsite("Mouse (for PC)", "mouseforpc", 42, 100 ,2, 100, "Israel", true, true  );
         Product p8 = new SoldThroughWebsite("Mouse (animal)", "mouseforcat", 15, 16 ,8, 500, "Israel", false, false  );
-        Product p9 = new SoldThroughWebsite("Tami4", "tamiarba", 200, 250 ,16, 77, "Israel", true, false  );
+        Product p9 = new SoldThroughWebsite("Tami4", "tamiarba", 200, 250 ,600, 77, "Israel", true, false  );
 
 
         store.getAllProducts().add(p1);
@@ -151,31 +151,31 @@ public class Program {
 
 
         store.getAllProducts().add(p7);
-        Order o19 = new Order(p7, costumer , 5, "ddddd");
+        Order o19 = new WebsiteOrder(p7, costumer , 5, "ddddd",new ExpressShipping(60));
         p7.getAllOrders().add(o19);
-        Order o20 = new Order(p7, costumer , 3, "qqqq");
+        Order o20 = new WebsiteOrder(p7, costumer , 3, "qqqq", new ExpressShipping(80));
         p7.getAllOrders().add(o20);
-        Order o21 = new Order(p7, costumer , 7, "dsdxsd");
+        Order o21 = new WebsiteOrder(p7, costumer , 7, "dsdxsd",new StandardShipping(90));
         p7.getAllOrders().add(o21);
         p7.calcTotalProfit();
 
 
         store.getAllProducts().add(p8);
-        Order o22 = new Order(p8, costumer , 2, "aaa");
+        Order o22 = new WebsiteOrder(p8, costumer , 2, "aaa",new StandardShipping(23));
         p8.getAllOrders().add(o22);
-        Order o23 = new Order(p8, costumer , 3, "bbb");
+        Order o23 = new WebsiteOrder(p8, costumer , 3, "bbb", new StandardShipping(90));
         p8.getAllOrders().add(o23);
-        Order o24 = new Order(p8, costumer , 4, "ccc");
+        Order o24 = new WebsiteOrder(p8, costumer , 4, "ccc", new StandardShipping(80));
         p8.getAllOrders().add(o24);
         p8.calcTotalProfit();
 
 
         store.getAllProducts().add(p9);
-        Order o25 = new Order(p9, costumer , 5, "xx");
+        Order o25 = new WebsiteOrder(p9, costumer , 5, "xx", new ExpressShipping(43));
         p9.getAllOrders().add(o25);
-        Order o26 = new Order(p9, costumer , 1, "yy");
+        Order o26 = new WebsiteOrder(p9, costumer , 1, "yy", new ExpressShipping(23));
         p9.getAllOrders().add(o26);
-        Order o27 = new Order(p9, costumer , 3, "zz");
+        Order o27 = new WebsiteOrder(p9, costumer , 3, "zz", new ExpressShipping(13));
         p9.getAllOrders().add(o27);
         p9.calcTotalProfit();
 

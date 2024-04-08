@@ -7,9 +7,8 @@ public class DHL extends ShippingCompany{
 	}
 
 	@Override
-	public int shippingPrice(Order order) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double shippingPrice(WebsiteOrder order) {
+		 return Calculator.getShippingPriceForDHL(order);
 	}
 
 }

@@ -15,6 +15,7 @@ public class Order {
 	private FormatForAccountant invoiceForAccountant;
 
 
+
 	public Order(Product product, Customer costumer, int amount, String serial) {
 		this.product = product;
 		this.costumer = costumer;
@@ -24,7 +25,6 @@ public class Order {
 		this.cost = Calculator.calcTotalOrderCost(this);
 		this.invoiceForAccountant = InvoiceFactory.createAccountantInvoice(this);
 		this.invoiceForCostumer = InvoiceFactory.createCostumerInvoice(this);
-
 	}
 
 	public void showInvoice(){
@@ -107,5 +107,6 @@ public class Order {
 		public String toString() {
 			return String.format("%-20s %-20s %-15s", serial, product.getProduct_name(), profit + " " + product.getCurrency());
 		}
-	}
+
+}
 
