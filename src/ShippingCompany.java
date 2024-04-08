@@ -1,7 +1,7 @@
 public abstract class  ShippingCompany implements OrderObserver{
     private String contact;
     private String phoneNumber;
-	private ShippingType shippingType;
+	//private ShippingType shippingType;
 
 	public ShippingCompany(String contact, String phoneNumber) { // removed shipping type  to check something!!
 		this.setContact(contact);
@@ -11,13 +11,13 @@ public abstract class  ShippingCompany implements OrderObserver{
 		public ShippingCompany getCompany(){
 		return this;
 		}
-	   public double calculateStandardShippingCost() {
-	        return shippingType.calculateStandardShippingFees();
-	    }
-
-	    public double calculateExpressShippingCost() {
-	        return shippingType.calculateExpressShippingFees();
-	    }
+//	   public double calculateStandardShippingCost() {
+//	        return shippingType.calculateStandardShippingFees();
+//	    }
+//
+//	    public double calculateExpressShippingCost() {
+//	        return shippingType.calculateExpressShippingFees();
+//	    }
 
 		public String getPhoneNumber() {
 			return phoneNumber;

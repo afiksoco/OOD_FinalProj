@@ -39,15 +39,6 @@ public class MakeOrderCommand implements Command {
 
 		if (product instanceof SoldThroughWebsite) {
 			chosenShipmentMethod = getShippingMethodFromUser(product);
-//            SoldThroughWebsite soldThroughWebsiteProduct = (SoldThroughWebsite) product;
-//            System.out.println("Choose shipping method from available methods: ");
-//
-//            if (soldThroughWebsiteProduct.getExpressShipping()) {
-//                System.out.println("1. Express Shipping");
-//            }
-//            if (soldThroughWebsiteProduct.getStandardShipping()) {
-//                System.out.println("2. Standard Shipping");
-//            }
 			newOrder = new WebsiteOrder(product, new Customer("aaa", "0526410559"), amount, serial,
 					chosenShipmentMethod);
 			shippingCompany = notifyObservers(newOrder);
