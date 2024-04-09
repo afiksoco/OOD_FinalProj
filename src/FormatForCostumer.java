@@ -8,6 +8,6 @@ public class FormatForCostumer extends  Invoice{
     @Override
     public String toString() {
         return "\u001B[4mInvoice for costumer\u001B[0m" +
-        super.toString()  + "\nTaxes: " + taxes +" " + order.getProduct().getCurrency()+ "\nDate : " +formattedDateTime + "\n";
+                super.toString()  + "\nTaxes: " + String.format("%.2f", taxes) +" " + order.getProduct().getCurrency()+ "\nDate : " +formattedDateTime + "\n";
     }
 }

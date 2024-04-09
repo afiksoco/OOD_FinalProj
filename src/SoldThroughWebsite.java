@@ -3,13 +3,13 @@ public class SoldThroughWebsite extends Product implements Shipable {
 
 	private String destCountry;
 	private Boolean expressShipping;
-    private Boolean standardShipping;
+	private Boolean standardShipping;
 
 	public SoldThroughWebsite(String product_name,String serial, int cost_price, int selling_price,int weight, int stock, String destCountry,Boolean expressShipping, Boolean standardShipping ) {
 		super(product_name, serial, cost_price, selling_price,weight, stock, "$");
 		this.destCountry = destCountry;
-		this.expressShipping = expressShipping; 
-        this.standardShipping = standardShipping;
+		this.expressShipping = expressShipping;
+		this.standardShipping = standardShipping;
 		setShippingMethods(expressShipping,standardShipping);
 	}
 
@@ -52,7 +52,7 @@ public class SoldThroughWebsite extends Product implements Shipable {
 		String colorCode = "\u001B[35m";
 		return super.toString() +
 				String.format("%-20s %-25s %-20s",
-					colorCode +	destCountry,  colorCode + standardShipping,  colorCode +  expressShipping + resetColorCode);
+						colorCode +	destCountry,  colorCode + standardShipping,  colorCode +  expressShipping + resetColorCode);
 	}
 
 

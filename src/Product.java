@@ -168,7 +168,7 @@ public abstract class Product implements Comparable<Object> {
         /*printTableFormat(this);*/
         for (Order o : allOrders) {
             printTableFormat(this);
-            System.out.println(o);
+            System.out.println(o+"\n");
             o.showInvoice();
         }
     }
@@ -182,11 +182,11 @@ public abstract class Product implements Comparable<Object> {
 
     public void printTableFormat(Product product) {
         if (product instanceof SoldThroughWebsite) {
-            System.out.printf("%-20s %-20s %-15s %-20s %-20s %-15s %-15s\n", "Order serial ID", "Product name", "Order profit"
+            System.out.printf("\n%-20s %-20s %-15s %-20s %-20s %-15s %-15s\n", "Order serial ID", "Product name", "Order profit"
                     , "Shipping company", "Shipping method", "Shipping fees", "Product cost");
 
         } else
-            System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
+            System.out.printf("\n%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
     }
 
     public void calcTotalProfit() {
@@ -212,15 +212,16 @@ public abstract class Product implements Comparable<Object> {
     }
 
 
+
     public void createMemento() {
-        this.memento = new Memento(allOrders, totalProfit, stock);
+        this.memento = new Memento(allOrders,totalProfit, stock);
     }
 
     public void setMemento(Memento m) {
         if (m == null)
             return;
         allOrders = new LinkedHashSet<>(m.getAllOrders());
-        totalProfit = m.totalProfit;
+        totalProfit= m.totalProfit;
         stock = m.stock;
     }
 
@@ -229,13 +230,14 @@ public abstract class Product implements Comparable<Object> {
     }
 
     public static class Memento {
-        private LinkedHashSet<Order> allOrders;
+        private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
         private int totalProfit;
         private int stock;
-        public Memento(Set<Order> allOrders, int totalProfit, int stock) {
+
+        public Memento(Set<Order> allOrders,int totalProfit, int stock) {
             this.allOrders = new LinkedHashSet<>(allOrders);
-            this.stock = stock;
             this.totalProfit = totalProfit;
+            this.stock = stock;
         }
 
         public Set<Order> getAllOrders() {

@@ -35,20 +35,20 @@ public class ProductFactory {
 		weight = scanner.nextInt();
 
 		switch (choice) {
-		case 1:
-			return createSoldThroughWebsite(serial, product_name, stock, weight);
-		case 2:
-			return createSoldInStore(serial, product_name, stock, weight);
-		case 3:
-			return createSoldToWholesalers(serial, product_name, stock, weight);
-		default:
-			System.out.println("Invalid choice. Product creation failed.");
-			return null;
+			case 1:
+				return createSoldThroughWebsite(serial, product_name, stock, weight);
+			case 2:
+				return createSoldInStore(serial, product_name, stock, weight);
+			case 3:
+				return createSoldToWholesalers(serial, product_name, stock, weight);
+			default:
+				System.out.println("Invalid choice. Product creation failed.");
+				return null;
 		}
 	}
 
 	private static SoldThroughWebsite createSoldThroughWebsite(String serial, String product_name, int stock,
-			int weight) {
+															   int weight) {
 		int cost_price = getCostPrice(false);
 		int selling_price = getSellPrice(false);
 
@@ -72,7 +72,7 @@ public class ProductFactory {
 	}
 
 	private static SoldToWholesalers createSoldToWholesalers(String serial, String product_name, int stock,
-			int weight) {
+															 int weight) {
 		int cost_price = getCostPrice(true);
 		int selling_price = getSellPrice(true);
 		return new SoldToWholesalers(product_name, serial, cost_price, selling_price, weight, stock);
@@ -84,7 +84,7 @@ public class ProductFactory {
 		else
 			System.out.println("Enter cost price for product. (in $)");
 		int cost_price = scanner.nextInt();
-		
+
 		return cost_price;
 	}
 

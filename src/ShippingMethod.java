@@ -1,6 +1,6 @@
 
 public class ShippingMethod {
-	
+
 	private double shippingFees;
 
 	public double	 getShippingFees() {

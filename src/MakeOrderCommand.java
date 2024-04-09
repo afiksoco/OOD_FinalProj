@@ -3,19 +3,21 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MakeOrderCommand implements Command {
-	public static Scanner scanner = new Scanner(System.in);
-	private List<Observer> observers = new ArrayList<>();
+    public static Scanner scanner = new Scanner(System.in);
+    private List<Observer> observers = new ArrayList<>();
     private Product product;
     private Customer customer;
     private ShippingCompany shippingCompany;
     private ShippingMethod shippingMethod;
     private String serial;
     private int amount;
-    
+
     private int previousAmount;
     private int previousProfit;
 
-    private Order newOrder = null;
+    private  Order newOrder;
+
+
     public MakeOrderCommand(Product product, Customer customer, int amount, String serial) {
         this.product = product;
         this.customer = customer;
@@ -50,14 +52,14 @@ public class MakeOrderCommand implements Command {
     public void orderInfo() {
         String cName;
         String cNumber;
-        System.out.println("Enter customer name.");
+        System.out.println("Enter customer name");
         cName = scanner.next();
-        System.out.println("Enter customer phone number.");
+        System.out.println("Enter customer phone number");
         cNumber = scanner.next();
         customer = new Customer(cName, cNumber);
 
 
-        System.out.println("Enter serial ID for the order.");
+        System.out.println("Enter serial ID for the order");
         serial = scanner.next();
 
         if (checkIfOrderExists(serial)) {
@@ -65,7 +67,7 @@ public class MakeOrderCommand implements Command {
             return;
         }
 
-        System.out.println("Enter amount: (current available amount: " + product.getStock() + ")");
+        System.out.println("Enter amount (current available amount " + product.getStock() + ")");
         do {
             amount = scanner.nextInt();
             if (amount <= 0) {
@@ -107,15 +109,15 @@ public class MakeOrderCommand implements Command {
             product.setProfit(Calculator.calcProductTotalProfit(product, amount));
             previousAmount = product.getStock();
             product.setStock(product.getStock() - amount);
-
         }
     }
 
-    public void printCmdRes (){
-        System.out.println("Order received!");
+    public void printCmdRes(){
+        System.out.println("\nOrder received!");
         product.printTableFormat(product);
         System.out.println(newOrder);
     }
+
     @Override
     public void undo() {
         product.setStock(previousAmount);
@@ -124,7 +126,7 @@ public class MakeOrderCommand implements Command {
         for (Order order : product.getAllOrders()) {
             lastOrder = order;
         }
-        System.out.println("Order #" + lastOrder.getSerial() + " cancelled successfully!");
+        System.out.println("\nOrder #" + lastOrder.getSerial() + " cancelled successfully!");
 
         product.getAllOrders().remove(lastOrder);
     }
@@ -138,12 +140,12 @@ public class MakeOrderCommand implements Command {
     }
 
     private ShippingCompany notifyObservers(WebsiteOrder order) {
-        System.out.println("Notifying shipping companies... ");
+        System.out.println("\nNotifying shipping companies... ");
         System.out.println("Checking for best price... ");
-        double minPrice = Integer.MAX_VALUE; // Initialize to the lowest possible value
+        double minPrice = Integer.MAX_VALUE;
         Observer bestCompany = null;
 
-        for (Observer observer : observers) { //not entering the for!
+        for (Observer observer : observers) {
             double price = observer.shippingPrice(order);
             if (price < minPrice) {
                 minPrice = price;
@@ -163,7 +165,7 @@ public class MakeOrderCommand implements Command {
         else if (!p.getExpressShipping() && p.getStandardShipping())
             return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD);
 
-        System.out.println("Choose shipping method:");
+        System.out.println("\nChoose shipping method:");
         int choice;
         do {
             System.out.println("1. Express Shipping.\n2. Standard Shipping.");

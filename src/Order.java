@@ -57,18 +57,18 @@ public class Order {
 	public Customer getCostumer() {
 		return costumer;
 	}
-	
-	
+
+
 	public void setCostumer(Customer costumer) {
 		this.costumer = costumer;
 	}
-	
-	
+
+
 	public int getAmount() {
 		return amount;
 	}
-	
-	
+
+
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
@@ -104,9 +104,9 @@ public class Order {
 
 
 	@Override
-		public String toString() {
-			return String.format("%-20s %-20s %-15s", serial, product.getProduct_name(), profit + " " + product.getCurrency());
-		}
+	public String toString() {
+		return String.format("%-20s %-20s %-15s", serial, product.getProduct_name(), profit + " " + product.getCurrency());
+	}
 
 }
 

@@ -6,7 +6,7 @@ public class FormatForAccountant extends Invoice {
     @Override
     public String toString() {
         return "\u001B[4mInvoice for accountant\u001B[0m"
-        +  super.toString() + "\nProfit: " + order.getProfit() + " " + order.getProduct().getCurrency() +
+                +  super.toString() + "\nProfit: " + order.getProfit() + " " + order.getProduct().getCurrency() +
                 "\nDate " + formattedDateTime + "\n";
     }
 }

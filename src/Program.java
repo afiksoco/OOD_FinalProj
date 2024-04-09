@@ -30,8 +30,10 @@ public class Program {
             choice = scanner.next();
             switch (choice) {
                 case "1":
-                    System.out.println("Uploading hardcoded data...");
                     hardcoded();
+                    System.out.println("Uploading hardcoded data...");
+
+
                     break;
                 case "2":
                     store.addProductToStore();
@@ -66,7 +68,6 @@ public class Program {
                     break;
                 case "10":
                     sm = store.createMemento();
-
                     // Implement save system functionality
                     break;
                 case "11":
@@ -74,7 +75,7 @@ public class Program {
                     break;
                 case "e":
                 case "E":
-                    System.out.println("Exiting program...");
+                    System.out.println("\nExiting program...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -89,7 +90,6 @@ public class Program {
         DHL DHL = store.getDHL();
         FedEx fedEx = store.getFedEx();
 
-
         Product p1 = new SoldInStore("Vacuum cleaner", "popo", 300, 333, 8, 12);
         Product p2 = new SoldInStore("TV", "sf3r1", 600, 1500, 30, 50);
         Product p3 = new SoldInStore("Smart watch", "zzz", 4, 8, 9, 268);
@@ -99,7 +99,6 @@ public class Program {
         Product p7 = new SoldThroughWebsite("Mouse (for PC)", "mouseforpc", 42, 100, 2, 100, "Israel", true, true);
         Product p8 = new SoldThroughWebsite("Mouse (animal)", "mouseforcat", 15, 16, 8, 500, "Israel", false, false);
         Product p9 = new SoldThroughWebsite("Tami4", "tamiarba", 200, 250, 600, 77, "Israel", true, false);
-
 
         store.getAllProducts().add(p1);
 
@@ -140,7 +139,6 @@ public class Program {
         store.getStack().add(cmd8);
         store.getStack().add(cmd9);
 
-
         store.getAllProducts().add(p4);
 
         MakeOrderCommand cmd10 = new MakeOrderCommand(p4, costumer, 1, "asdvbv");
@@ -153,7 +151,6 @@ public class Program {
         store.getStack().add(cmd10);
         store.getStack().add(cmd11);
         store.getStack().add(cmd12);
-
 
         store.getAllProducts().add(p5);
 
@@ -168,7 +165,6 @@ public class Program {
         store.getStack().add(cmd14);
         store.getStack().add(cmd15);
 
-
         store.getAllProducts().add(p6);
 
         MakeOrderCommand cmd16 = new MakeOrderCommand(p6, costumer, 3, "accvbv");
@@ -182,7 +178,6 @@ public class Program {
         store.getStack().add(cmd17);
         store.getStack().add(cmd18);
 
-
         store.getAllProducts().add(p7);
 
         MakeOrderCommand cmd19 = new MakeOrderCommand(p7, costumer, 5, "ddddd", new ExpressShipping(), DHL);
@@ -195,7 +190,6 @@ public class Program {
         store.getStack().add(cmd19);
         store.getStack().add(cmd20);
         store.getStack().add(cmd21);
-
 
         store.getAllProducts().add(p8);
 

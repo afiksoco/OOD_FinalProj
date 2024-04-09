@@ -5,5 +5,5 @@ public class InvoiceFactory {
         return  new FormatForCostumer(order);
     }
     public static FormatForAccountant createAccountantInvoice(Order order){
-    	return  new FormatForAccountant(order); }
+        return  new FormatForAccountant(order); }
 }

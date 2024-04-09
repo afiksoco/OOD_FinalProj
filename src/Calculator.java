@@ -75,7 +75,11 @@ public class Calculator {
     }
 
     public static int getBasePriceForFedexByWeight(int base, Product product) {
-        int weight = product.weight / 10;
+        int weight;
+        if(product.weight<10) //products that weight less that 10kg the shipping fees is the base price
+            weight=1;
+        else
+            weight = product.weight/10;
         return base*weight;
     }
 

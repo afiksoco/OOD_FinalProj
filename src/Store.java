@@ -14,7 +14,7 @@ public class Store {
 
     public Store() {
         this.fedEx = new FedEx("Afik", "0526410559");
-        this.DHL = new DHL("soco", " 41564685132");
+        this.DHL = new DHL("soco", " 0546468585");
     }
 
     public static Store getInstance() { //singleton
@@ -36,14 +36,13 @@ public class Store {
 
     public void removeProductBySerial() {
         showAllProducts(Product.class);
-        System.out.println("Enter serial ID of the product you want to remove!");
-
+        System.out.println("\nEnter serial ID of the product you want to remove");
         Product p = infoForProduct();
         if (p != null) {
             if (allProducts.remove(p)) {
-                System.out.println("Product #" + p.getSerial() + " '" + p.getProduct_name() + "'" + " deleted successfully");
+                System.out.println("\nProduct #" + p.getSerial() + " '" + p.getProduct_name() + "'" + " deleted successfully!");
             } else {
-                System.out.println("Failed to delete product #" + p.getSerial() + " '" + p.getProduct_name() + "'.");
+                System.out.println("\nFailed to delete product #" + p.getSerial() + " '" + p.getProduct_name() + "'.");
             }
         }
     }
@@ -59,7 +58,7 @@ public class Store {
 
 
     public void createNewOrder() {
-        System.out.println("Choose type on product.\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
+        System.out.println("\nChoose type on product:\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
         int choice;
         while (true) {
             choice = scanner.nextInt();
@@ -100,7 +99,7 @@ public class Store {
                 break;
         }
 
-        System.out.println("Enter serial ID of the product you want to order!");
+        System.out.println("\nEnter serial ID of the product you want to order!");
         Product p = infoForProduct();
         if (p != null) {
             MakeOrderCommand command = new MakeOrderCommand(p);
@@ -134,7 +133,7 @@ public class Store {
     public void showSystem() {
         showAllProducts(Product.class);
         int profit = Calculator.calcTotalProfitInILS(allProducts);
-        System.out.println("Total profit from all orders: " + profit + " ILS");
+        System.out.println("\nTotal profit from all orders: " + profit + " ILS");
 
     }
 
@@ -148,7 +147,7 @@ public class Store {
     }
 
     public void printTableFormat() {
-        System.out.printf("%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
+        System.out.printf("\n%-20s %-20s %-15s %-15s %-15s %-10s %-15s %-20s %-20s\n",
                 "Product type",
                 "Product name", "Serial", "Cost price", "Selling price", "Stock",
                 "Destination", "Standard shipment", "Express shipment");
@@ -169,18 +168,18 @@ public class Store {
 
     public void updateProductStock() {
         showAllProducts(Product.class);
-        System.out.println("Enter serial ID of the product you want to update its stock!");
+        System.out.println("\nEnter serial ID of the product you want to update its stock");
         Product p = infoForProduct();
         if (p != null) {
             int newAmount;
-            System.out.println("Currect amount: " + p.getStock());
-            System.out.println("Enter new amount: ");
+            System.out.println("\nCurrect amount " + p.getStock());
+            System.out.println("Enter new amount ");
             newAmount = scanner.nextInt();
             if (newAmount < 0)
                 System.out.println("Invalid amount! Exiting...");
             else {
                 p.setStock(newAmount);
-                System.out.println("Product's stock updated to " + newAmount + "!");
+                System.out.println("\nProduct's stock updated to " + newAmount + "!");
             }
         }
     }
@@ -203,7 +202,7 @@ public class Store {
         }
         showAllProducts(Product.class);
 
-        System.out.println("Enter serial to see detailed info of a product.");
+        System.out.println("\nEnter serial to see detailed info of a product.");
         Product p = infoForProduct();
         if (p != null) {
             printTableFormat();
@@ -217,7 +216,7 @@ public class Store {
             return;
         }
         showAllProducts(Product.class);
-        System.out.println("Enter serial to see all the orders for specific product.");
+        System.out.println("\nEnter serial to see all the orders for specific product.");
         Product p = infoForProduct();
         if (p != null) {
             if (p.getAllOrders().isEmpty()) {
@@ -225,28 +224,29 @@ public class Store {
                 return;
             }
             p.showAllOrders();
-            System.out.println("Store total profit for this product is: " + p.getProfit() + " " + p.getCurrency());
+            System.out.println("\nStore total profit for this product is: " + p.getProfit() + " " + p.getCurrency());
         }
     }
-    
+
     public Memento createMemento() {
-    	for (Product product : allProducts)
-    		product.createMemento();
+        for (Product product : allProducts)
+            product.createMemento();
+        System.out.println("\nData state stored successfuly!");
         return new Memento(allProducts, stack);
     }
 
     public void setMemento(Memento m) {
         if (m == null) {
-            System.out.println("No previous states.");
+            System.out.println("\nNo previous states.");
             return;
         }
         allProducts = new TreeSet<>(m.getAllProducts());
         for (Product product : allProducts) {
-          product.setMemento(product.getMemento());
-      }
+            product.setMemento(product.getMemento());
+        }
         stack = new Stack<>();
         this.stack.addAll(m.getStack());
-        System.out.println("State restored!");
+        System.out.println("\nData from last save restored successfully!");
     }
 
     public static class Memento {
@@ -267,6 +267,6 @@ public class Store {
         }
     }
 
-    
-    
+
+
 }
