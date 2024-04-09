@@ -103,8 +103,8 @@ public class Program {
 
         store.getAllProducts().add(p1);
 
-        MakeOrderCommand cmd1 = new MakeOrderCommand(p1, costumer,2, " asdd2");
-        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer , 2, "asdd2");
+        MakeOrderCommand cmd1 = new MakeOrderCommand(p1, costumer,2, "asdd2");
+        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer , 2, "gsdd2");
         MakeOrderCommand cmd3 = new MakeOrderCommand(p1, costumer , 1, "wsdd2");
         cmd1.execute();
         cmd2.execute();
