@@ -11,7 +11,7 @@ public abstract class Product implements Comparable<Object> {
     private int selling_price; // for costumer
     private int stock;
     int weight;
-    
+
     private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
     private String currency;
     private int totalProfit;
@@ -210,30 +210,31 @@ public abstract class Product implements Comparable<Object> {
     public void setProfit(int profit) {
         this.totalProfit = profit;
     }
-    
-    
-    
+
+
     public void createMemento() {
-        this.memento = new Memento(allOrders,totalProfit);
+        this.memento = new Memento(allOrders, totalProfit, stock);
     }
 
     public void setMemento(Memento m) {
         if (m == null)
             return;
-         allOrders = new LinkedHashSet<>(m.getAllOrders());
-         totalProfit= m.totalProfit;
+        allOrders = new LinkedHashSet<>(m.getAllOrders());
+        totalProfit = m.totalProfit;
+        stock = m.stock;
     }
-    
+
     public Memento getMemento() {
-    	return memento;
+        return memento;
     }
 
     public static class Memento {
-        private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
+        private LinkedHashSet<Order> allOrders;
         private int totalProfit;
-        
-        public Memento(Set<Order> allOrders,int totalProfit) {
+        private int stock;
+        public Memento(Set<Order> allOrders, int totalProfit, int stock) {
             this.allOrders = new LinkedHashSet<>(allOrders);
+            this.stock = stock;
             this.totalProfit = totalProfit;
         }
 

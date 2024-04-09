@@ -15,7 +15,7 @@ public class MakeOrderCommand implements Command {
     private int previousAmount;
     private int previousProfit;
 
-
+    private Order newOrder = null;
     public MakeOrderCommand(Product product, Customer customer, int amount, String serial) {
         this.product = product;
         this.customer = customer;
@@ -84,7 +84,7 @@ public class MakeOrderCommand implements Command {
         if (amount > product.getStock()) {
             return;
         }
-        Order newOrder;
+
         if (product instanceof SoldThroughWebsite) {
 
             if (shippingMethod == null)
@@ -107,12 +107,15 @@ public class MakeOrderCommand implements Command {
             product.setProfit(Calculator.calcProductTotalProfit(product, amount));
             previousAmount = product.getStock();
             product.setStock(product.getStock() - amount);
-            System.out.println("Order received!");
-            product.printTableFormat(product);
-            System.out.println(newOrder);
+
         }
     }
 
+    public void printCmdRes (){
+        System.out.println("Order received!");
+        product.printTableFormat(product);
+        System.out.println(newOrder);
+    }
     @Override
     public void undo() {
         product.setStock(previousAmount);

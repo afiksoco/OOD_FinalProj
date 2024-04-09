@@ -35,6 +35,7 @@ public class Store {
     }
 
     public void removeProductBySerial() {
+        showAllProducts(Product.class);
         System.out.println("Enter serial ID of the product you want to remove!");
 
         Product p = infoForProduct();
@@ -107,6 +108,7 @@ public class Store {
             command.addObserver(fedEx);
             command.execute();
             stack.add(command);
+            command.printCmdRes();
         }
 
     }
@@ -166,6 +168,7 @@ public class Store {
     }
 
     public void updateProductStock() {
+        showAllProducts(Product.class);
         System.out.println("Enter serial ID of the product you want to update its stock!");
         Product p = infoForProduct();
         if (p != null) {

@@ -5,14 +5,13 @@ public class Program {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-    	Store.Memento sm =null;
-    	
+        Store.Memento sm = null;
+
         String choice;
 
         System.out.println("Welcome to the Store!");
 
         do {
-            System.out.println("Menu:");
             System.out.println("1. Load Hardcoded Data");
             System.out.println("2. Add Product");
             System.out.println("3. Delete Product");
@@ -31,6 +30,7 @@ public class Program {
             choice = scanner.next();
             switch (choice) {
                 case "1":
+                    System.out.println("Uploading hardcoded data...");
                     hardcoded();
                     break;
                 case "2":
@@ -62,11 +62,11 @@ public class Program {
                     break;
                 case "9":
                     // Implement show all product orders functionality
-                	store.showAllOrdersForProduct();
+                    store.showAllOrdersForProduct();
                     break;
                 case "10":
-                   sm = store.createMemento();
-                   
+                    sm = store.createMemento();
+
                     // Implement save system functionality
                     break;
                 case "11":
@@ -85,28 +85,27 @@ public class Program {
     }
 
     private static void hardcoded() {
-        Customer costumer = new Customer("Afik","0251654164");
+        Customer costumer = new Customer("Afik", "0251654164");
         DHL DHL = store.getDHL();
         FedEx fedEx = store.getFedEx();
 
 
-
-        Product p1 = new SoldInStore("Vacuum cleaner", "popo", 300, 333 ,8, 12);
-        Product p2 = new SoldInStore("TV", "sf3r1", 600, 1500 ,30, 50);
-        Product p3 = new SoldInStore("Smart watch", "zzz", 4, 8 , 9,268);
-        Product p4 = new SoldToWholesalers("Iphone18SuperPro", "abc", 88, 99 ,4, 34);
-        Product p5 = new SoldToWholesalers("PC", "adfaaf2", 12, 99 ,4, 34);
-        Product p6 = new SoldToWholesalers("Keyboard", "bzc", 88, 99 ,2, 94);
-        Product p7 = new SoldThroughWebsite("Mouse (for PC)", "mouseforpc", 42, 100 ,2, 100, "Israel", true, true  );
-        Product p8 = new SoldThroughWebsite("Mouse (animal)", "mouseforcat", 15, 16 ,8, 500, "Israel", false, false  );
-        Product p9 = new SoldThroughWebsite("Tami4", "tamiarba", 200, 250 ,600, 77, "Israel", true, false  );
+        Product p1 = new SoldInStore("Vacuum cleaner", "popo", 300, 333, 8, 12);
+        Product p2 = new SoldInStore("TV", "sf3r1", 600, 1500, 30, 50);
+        Product p3 = new SoldInStore("Smart watch", "zzz", 4, 8, 9, 268);
+        Product p4 = new SoldToWholesalers("Iphone18SuperPro", "abc", 88, 99, 4, 34);
+        Product p5 = new SoldToWholesalers("PC", "adfaaf2", 12, 99, 4, 34);
+        Product p6 = new SoldToWholesalers("Keyboard", "bzc", 88, 99, 2, 94);
+        Product p7 = new SoldThroughWebsite("Mouse (for PC)", "mouseforpc", 42, 100, 2, 100, "Israel", true, true);
+        Product p8 = new SoldThroughWebsite("Mouse (animal)", "mouseforcat", 15, 16, 8, 500, "Israel", false, false);
+        Product p9 = new SoldThroughWebsite("Tami4", "tamiarba", 200, 250, 600, 77, "Israel", true, false);
 
 
         store.getAllProducts().add(p1);
 
-        MakeOrderCommand cmd1 = new MakeOrderCommand(p1, costumer,2, "asdd2");
-        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer , 2, "sdd2");
-        MakeOrderCommand cmd3 = new MakeOrderCommand(p1, costumer , 1, "wsdd2");
+        MakeOrderCommand cmd1 = new MakeOrderCommand(p1, costumer, 2, "asdd2");
+        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer, 2, "sdd2");
+        MakeOrderCommand cmd3 = new MakeOrderCommand(p1, costumer, 1, "wsdd2");
         cmd1.execute();
         cmd2.execute();
         cmd3.execute();
@@ -186,9 +185,9 @@ public class Program {
 
         store.getAllProducts().add(p7);
 
-        MakeOrderCommand cmd19 = new MakeOrderCommand(p7, costumer, 5, "ddddd",new ExpressShipping(),DHL );
-        MakeOrderCommand cmd20 = new MakeOrderCommand(p7, costumer, 3, "qqqq",new ExpressShipping(),DHL);
-        MakeOrderCommand cmd21 = new MakeOrderCommand(p7, costumer, 7, "dsdxsd",new StandardShipping(),DHL);
+        MakeOrderCommand cmd19 = new MakeOrderCommand(p7, costumer, 5, "ddddd", new ExpressShipping(), DHL);
+        MakeOrderCommand cmd20 = new MakeOrderCommand(p7, costumer, 3, "qqqq", new ExpressShipping(), DHL);
+        MakeOrderCommand cmd21 = new MakeOrderCommand(p7, costumer, 7, "dsdxsd", new StandardShipping(), DHL);
         cmd19.execute();
         cmd20.execute();
         cmd21.execute();
@@ -200,9 +199,9 @@ public class Program {
 
         store.getAllProducts().add(p8);
 
-        MakeOrderCommand cmd22 = new MakeOrderCommand(p8, costumer, 2, "aaa", new StandardShipping(),fedEx);
-        MakeOrderCommand cmd23 = new MakeOrderCommand(p8, costumer, 3, "bbb",new StandardShipping(), fedEx);
-        MakeOrderCommand cmd24 = new MakeOrderCommand(p8, costumer, 4, "ccc",new StandardShipping(), DHL);
+        MakeOrderCommand cmd22 = new MakeOrderCommand(p8, costumer, 2, "aaa", new StandardShipping(), fedEx);
+        MakeOrderCommand cmd23 = new MakeOrderCommand(p8, costumer, 3, "bbb", new StandardShipping(), fedEx);
+        MakeOrderCommand cmd24 = new MakeOrderCommand(p8, costumer, 4, "ccc", new StandardShipping(), DHL);
         cmd22.execute();
         cmd23.execute();
         cmd24.execute();
@@ -213,9 +212,9 @@ public class Program {
 
         store.getAllProducts().add(p9);
 
-        MakeOrderCommand cmd25 = new MakeOrderCommand(p9, costumer, 5, "xx",new ExpressShipping(), fedEx);
-        MakeOrderCommand cmd26 = new MakeOrderCommand(p9, costumer, 1, "yy",new ExpressShipping(), fedEx);
-        MakeOrderCommand cmd27 = new MakeOrderCommand(p9, costumer, 3, "zz",new ExpressShipping(), DHL);
+        MakeOrderCommand cmd25 = new MakeOrderCommand(p9, costumer, 5, "xx", new ExpressShipping(), fedEx);
+        MakeOrderCommand cmd26 = new MakeOrderCommand(p9, costumer, 1, "yy", new ExpressShipping(), fedEx);
+        MakeOrderCommand cmd27 = new MakeOrderCommand(p9, costumer, 3, "zz", new ExpressShipping(), DHL);
         cmd25.execute();
         cmd26.execute();
         cmd27.execute();
