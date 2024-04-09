@@ -78,4 +78,14 @@ public class Calculator {
         int weight = product.weight / 10 * 10;
         return base*weight;
     }
+
+    public static double calcShippingFeesUnknown(WebsiteOrder websiteOrder){
+        if (websiteOrder.getShippingCompany() instanceof DHL)
+            return getShippingPriceForDHL(websiteOrder);
+
+        if (websiteOrder.getShippingCompany() instanceof FedEx)
+            return getShippingPriceForFedEx(websiteOrder);
+
+        return 0;
+    }
 }

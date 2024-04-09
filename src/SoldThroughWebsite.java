@@ -15,6 +15,8 @@ public class SoldThroughWebsite extends Product implements Shipable {
 	}
 
 
+
+
 	public void  setShippingMethods(Boolean expressShipping, Boolean standardShipping){
 		if(!expressShipping && !standardShipping)
 			this.standardShipping = true;

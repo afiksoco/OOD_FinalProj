@@ -2,7 +2,7 @@
 public class ExpressShipping extends ShippingMethod {
 
 
-	public ExpressShipping(double shippingFees) {
+	/*public ExpressShipping(double shippingFees) {
 		super(shippingFees);
-	}
+	}*/
 }

@@ -7,17 +7,41 @@ public class MakeOrderCommand implements Command {
     private int previousAmount;
     private int previousProfit;
 
+    private Customer customer;
+    private int amount;
+
+    private String serial;
     private List<Observer> observers = new ArrayList<>();
 
     public static Scanner scanner = new Scanner(System.in);
 
-    public MakeOrderCommand(Product product) {
+    private ShippingMethod shippingMethod;
+
+    ShippingCompany shippingCompany;
+
+    public MakeOrderCommand(Product product, Customer customer, int amount, String serial) {
         this.product = product;
+        this.customer = customer;
+        this.amount = amount;
+        this.serial = serial;
     }
 
+    public MakeOrderCommand(Product product, Customer customer, int amount, String serial, ShippingMethod shippingMethod, ShippingCompany shippingCompany) {
+        this.product = product;
+        this.customer = customer;
+        this.amount = amount;
+        this.serial = serial;
+        this.shippingMethod = shippingMethod;
+        this.shippingCompany = shippingCompany;
+    }
+
+    public MakeOrderCommand(Product product) {
+        this.product = product;
+        orderInfo();
+    }
 
     public boolean checkIfOrderExists(String serial) { // despite the SET class checks for duplicates, // we want to stop the order info at the begginin
-        Product p = product;
+
         for (Order o : product.getAllOrders()) {
             if (o.getSerial().equals(serial))
                 return true;
@@ -25,18 +49,26 @@ public class MakeOrderCommand implements Command {
         return false;
     }
 
-    @Override
-    public void execute() {
-        System.out.println("Enter serial ID for the order : ");
-        String serial = scanner.next();
 
-        if (checkIfOrderExists(serial)){
-                System.out.println("\u001B[31mFailed to take order! serial ID already exists.\u001B[0m");
+    public void orderInfo() {
+        String cName;
+        String cNumber;
+        System.out.println("Enter customer name  ");
+        cName = scanner.next();
+        System.out.println("Enter customer phone number ");
+        cNumber = scanner.next();
+        customer = new Customer(cName, cNumber);
+
+
+        System.out.println("Enter serial ID for the order : ");
+        serial = scanner.next();
+
+        if (checkIfOrderExists(serial)) {
+            System.out.println("\u001B[31mFailed to take order! serial ID already exists.\u001B[0m");
             return;
         }
 
         System.out.println("Enter amount : ( current available amount : " + product.getStock() + " )");
-        int amount;
         do {
             amount = scanner.nextInt();
             if (amount <= 0) {
@@ -46,24 +78,32 @@ public class MakeOrderCommand implements Command {
 
         if (amount > product.getStock()) {
             System.out.println("Not enough in storage... Exiting...");
-            return;
         }
 
+    }
+
+    @Override
+    public void execute() {
+        if (amount > product.getStock()) {
+            return;
+        }
         Order newOrder;
-
-
         if (product instanceof SoldThroughWebsite) {
 
-            ShippingMethod chosenShipmentMethod = null;
-            ShippingCompany shippingCompany = null;
-            chosenShipmentMethod = getShippingMethodFromUser(product);
-            newOrder = new WebsiteOrder(product, new Customer("aaa", "0526410559"), amount, serial,
-                    chosenShipmentMethod);
-            shippingCompany = notifyObservers((WebsiteOrder) newOrder);
+            if (shippingMethod == null)
+                shippingMethod = getShippingMethodFromUser(product);
+            newOrder = new WebsiteOrder(product, customer, amount, serial,
+                    shippingMethod);
+            if (shippingCompany == null)
+                shippingCompany = notifyObservers((WebsiteOrder) newOrder);
+            else{
+                ((WebsiteOrder) newOrder).setShippingCompany(shippingCompany);
+                ((WebsiteOrder) newOrder).getShippingMethod().setShippingFees(Calculator.calcShippingFeesUnknown((WebsiteOrder) newOrder));
+            }
             ((WebsiteOrder) newOrder).setShippingCompany(shippingCompany);
 
         } else
-            newOrder = new Order(product, new Customer("aaa", "0526410559"), amount, serial);
+            newOrder = new Order(product, customer, amount, serial);
 
         previousProfit = product.getProfit();
         if (product.getAllOrders().add(newOrder)) {
@@ -119,9 +159,9 @@ public class MakeOrderCommand implements Command {
         SoldThroughWebsite p = (SoldThroughWebsite) product;
 
         if (p.getExpressShipping() && !p.getStandardShipping())
-            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS, p.getProfit());
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS);
         else if (!p.getExpressShipping() && p.getStandardShipping())
-            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD, p.getProfit());
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD);
 
         System.out.println("Choose shipping method:");
         int choice;
@@ -131,9 +171,9 @@ public class MakeOrderCommand implements Command {
         } while (choice != 1 && choice != 2);
 
         if (choice == 1)
-            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS, p.getProfit());
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.EXPRESS);
         else
-            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD, p.getProfit());
+            return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD);
     }
 
 }

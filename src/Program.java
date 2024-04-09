@@ -21,7 +21,9 @@ public class Program {
             System.out.println("7. Show Product Details by Serial");
             System.out.println("8. Show All Available Products");
             System.out.println("9. Show All Product Orders");
-            System.out.println("10. Save System");
+            System.out.println("10. Save current state");
+            System.out.println("11. Load state from last save");
+
             System.out.println("e/E - Exit");
             System.out.print("Enter your choice: ");
 
@@ -62,7 +64,12 @@ public class Program {
                 	store.showAllOrdersForProduct();
                     break;
                 case "10":
+                   store.saveToMemento();
+
                     // Implement save system functionality
+                    break;
+                case "11":
+                    store.restoreFromMemento(store.getMemento());
                     break;
                 case "e":
                 case "E":
@@ -78,7 +85,11 @@ public class Program {
 
     private static void hardcoded() {
         Customer costumer = new Customer("Afik","0251654164");
-        // TODO Auto-generated method stub
+        DHL DHL = store.getDHL();
+        FedEx fedEx = store.getFedEx();
+
+
+
         Product p1 = new SoldInStore("Vacuum cleaner", "popo", 300, 333 ,8, 12);
         Product p2 = new SoldInStore("TV", "sf3r1", 600, 1500 ,30, 50);
         Product p3 = new SoldInStore("Smart watch", "zzz", 4, 8 , 9,268);
@@ -91,95 +102,125 @@ public class Program {
 
 
         store.getAllProducts().add(p1);
-        Order o1 = new Order(p1, costumer , 2, "asdd2");
-        Order o2 = new Order(p1, costumer , 1, "wsdd2");
-        Order o3 = new Order(p1, costumer , 3, "warrdd2");
-        p1.getAllOrders().add(o1);
-        p1.getAllOrders().add(o2);
-        p1.getAllOrders().add(o3);
-        p1.calcTotalProfit();
 
+        MakeOrderCommand cmd1 = new MakeOrderCommand(p1, costumer,2, " asdd2");
+        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer , 2, "asdd2");
+        MakeOrderCommand cmd3 = new MakeOrderCommand(p1, costumer , 1, "wsdd2");
+        cmd1.execute();
+        cmd2.execute();
+        cmd3.execute();
+
+        store.getStack().add(cmd1);
+        store.getStack().add(cmd2);
+        store.getStack().add(cmd3);
 
         store.getAllProducts().add(p2);
-        Order o4 = new Order(p2, costumer , 6, "asd2");
-        Order o5 = new Order(p2, costumer , 1, "wqwed2");
-        Order o6 = new Order(p2, costumer , 3, "wswq1qqq2");
-        p2.getAllOrders().add(o4);
-        p2.getAllOrders().add(o5);
-        p2.getAllOrders().add(o6);
-        p2.calcTotalProfit();
 
+        MakeOrderCommand cmd4 = new MakeOrderCommand(p2, costumer, 6, "asd2");
+        MakeOrderCommand cmd5 = new MakeOrderCommand(p2, costumer, 1, "wqwed2");
+        MakeOrderCommand cmd6 = new MakeOrderCommand(p2, costumer, 3, "wswq1qqq2");
+        cmd4.execute();
+        cmd5.execute();
+        cmd6.execute();
+
+        store.getStack().add(cmd4);
+        store.getStack().add(cmd5);
+        store.getStack().add(cmd6);
 
         store.getAllProducts().add(p3);
-        Order o7 = new Order(p3, costumer , 1, "asdddd2");
-        Order o8 = new Order(p3, costumer , 6, "wed2");
-        Order o9 = new Order(p3, costumer , 4, "ss32");
-        p3.getAllOrders().add(o7);
-        p3.getAllOrders().add(o8);
-        p3.getAllOrders().add(o9);
-        p3.calcTotalProfit();
+
+        MakeOrderCommand cmd7 = new MakeOrderCommand(p3, costumer, 1, "asdddd2");
+        MakeOrderCommand cmd8 = new MakeOrderCommand(p3, costumer, 6, "wed2");
+        MakeOrderCommand cmd9 = new MakeOrderCommand(p3, costumer, 4, "ss32");
+        cmd7.execute();
+        cmd8.execute();
+        cmd9.execute();
+
+        store.getStack().add(cmd7);
+        store.getStack().add(cmd8);
+        store.getStack().add(cmd9);
 
 
         store.getAllProducts().add(p4);
-        Order o10 = new Order(p4, costumer , 1, "asdvbv");
-        Order o11= new Order(p4, costumer , 2, "azxcx");
-        Order o12= new Order(p4, costumer , 4, "snns32");
-        p4.getAllOrders().add(o10);
-        p4.getAllOrders().add(o11);
-        p4.getAllOrders().add(o12);
-        p4.calcTotalProfit();
+
+        MakeOrderCommand cmd10 = new MakeOrderCommand(p4, costumer, 1, "asdvbv");
+        MakeOrderCommand cmd11 = new MakeOrderCommand(p4, costumer, 2, "azxcx");
+        MakeOrderCommand cmd12 = new MakeOrderCommand(p4, costumer, 4, "snns32");
+        cmd10.execute();
+        cmd11.execute();
+        cmd12.execute();
+
+        store.getStack().add(cmd10);
+        store.getStack().add(cmd11);
+        store.getStack().add(cmd12);
 
 
         store.getAllProducts().add(p5);
-        Order o13 = new Order(p5, costumer , 1, "asddh2");
-        Order o14 = new Order(p5, costumer , 6, "wed2");
-        Order o15 = new Order(p5, costumer , 4, "ss32");
-        p5.getAllOrders().add(o13);
-        p5.getAllOrders().add(o14);
-        p5.getAllOrders().add(o15);
-        p5.calcTotalProfit();
 
-        // Add product p6
+        MakeOrderCommand cmd13 = new MakeOrderCommand(p5, costumer, 1, "asddh2");
+        MakeOrderCommand cmd14 = new MakeOrderCommand(p5, costumer, 6, "wed2");
+        MakeOrderCommand cmd15 = new MakeOrderCommand(p5, costumer, 4, "ss32");
+        cmd13.execute();
+        cmd14.execute();
+        cmd15.execute();
+
+        store.getStack().add(cmd13);
+        store.getStack().add(cmd14);
+        store.getStack().add(cmd15);
+
+
         store.getAllProducts().add(p6);
-        Order o16 = new Order(p6, costumer , 3, "accvbv");
-        p6.getAllOrders().add(o16);
-        Order o17 = new Order(p6, costumer , 2, "azxcx");
-        p6.getAllOrders().add(o17);
-        Order o18 = new Order(p6, costumer , 4, "snns32");
-        p6.getAllOrders().add(o18);
-        p6.calcTotalProfit();
+
+        MakeOrderCommand cmd16 = new MakeOrderCommand(p6, costumer, 3, "accvbv");
+        MakeOrderCommand cmd17 = new MakeOrderCommand(p6, costumer, 2, "azxcx");
+        MakeOrderCommand cmd18 = new MakeOrderCommand(p6, costumer, 4, "snns32");
+        cmd16.execute();
+        cmd17.execute();
+        cmd18.execute();
+
+        store.getStack().add(cmd16);
+        store.getStack().add(cmd17);
+        store.getStack().add(cmd18);
 
 
         store.getAllProducts().add(p7);
-        Order o19 = new WebsiteOrder(p7, costumer , 5, "ddddd",new ExpressShipping(60));
-        p7.getAllOrders().add(o19);
-        Order o20 = new WebsiteOrder(p7, costumer , 3, "qqqq", new ExpressShipping(80));
-        p7.getAllOrders().add(o20);
-        Order o21 = new WebsiteOrder(p7, costumer , 7, "dsdxsd",new StandardShipping(90));
-        p7.getAllOrders().add(o21);
-        p7.calcTotalProfit();
+
+        MakeOrderCommand cmd19 = new MakeOrderCommand(p7, costumer, 5, "ddddd",new ExpressShipping(),DHL );
+        MakeOrderCommand cmd20 = new MakeOrderCommand(p7, costumer, 3, "qqqq",new ExpressShipping(),DHL);
+        MakeOrderCommand cmd21 = new MakeOrderCommand(p7, costumer, 7, "dsdxsd",new StandardShipping(),DHL);
+        cmd19.execute();
+        cmd20.execute();
+        cmd21.execute();
+
+        store.getStack().add(cmd19);
+        store.getStack().add(cmd20);
+        store.getStack().add(cmd21);
 
 
         store.getAllProducts().add(p8);
-        Order o22 = new WebsiteOrder(p8, costumer , 2, "aaa",new StandardShipping(23));
-        p8.getAllOrders().add(o22);
-        Order o23 = new WebsiteOrder(p8, costumer , 3, "bbb", new StandardShipping(90));
-        p8.getAllOrders().add(o23);
-        Order o24 = new WebsiteOrder(p8, costumer , 4, "ccc", new StandardShipping(80));
-        p8.getAllOrders().add(o24);
-        p8.calcTotalProfit();
 
+        MakeOrderCommand cmd22 = new MakeOrderCommand(p8, costumer, 2, "aaa", new StandardShipping(),fedEx);
+        MakeOrderCommand cmd23 = new MakeOrderCommand(p8, costumer, 3, "bbb",new StandardShipping(), fedEx);
+        MakeOrderCommand cmd24 = new MakeOrderCommand(p8, costumer, 4, "ccc",new StandardShipping(), DHL);
+        cmd22.execute();
+        cmd23.execute();
+        cmd24.execute();
+
+        store.getStack().add(cmd22);
+        store.getStack().add(cmd23);
+        store.getStack().add(cmd24);
 
         store.getAllProducts().add(p9);
-        Order o25 = new WebsiteOrder(p9, costumer , 5, "xx", new ExpressShipping(43));
-        p9.getAllOrders().add(o25);
-        Order o26 = new WebsiteOrder(p9, costumer , 1, "yy", new ExpressShipping(23));
-        p9.getAllOrders().add(o26);
-        Order o27 = new WebsiteOrder(p9, costumer , 3, "zz", new ExpressShipping(13));
-        p9.getAllOrders().add(o27);
-        p9.calcTotalProfit();
 
+        MakeOrderCommand cmd25 = new MakeOrderCommand(p9, costumer, 5, "xx",new ExpressShipping(), fedEx);
+        MakeOrderCommand cmd26 = new MakeOrderCommand(p9, costumer, 1, "yy",new ExpressShipping(), fedEx);
+        MakeOrderCommand cmd27 = new MakeOrderCommand(p9, costumer, 3, "zz",new ExpressShipping(), DHL);
+        cmd25.execute();
+        cmd26.execute();
+        cmd27.execute();
 
-
+        store.getStack().add(cmd25);
+        store.getStack().add(cmd26);
+        store.getStack().add(cmd27);
     }
 }

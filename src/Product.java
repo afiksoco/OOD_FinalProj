@@ -1,5 +1,7 @@
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Stack;
+import java.util.TreeSet;
 
 public abstract class Product implements Comparable {
 
@@ -13,10 +15,11 @@ public abstract class Product implements Comparable {
     private String currency;
     private int totalProfit;
 
-    int weight ;
+    private  ProductMemento memento;
+    int weight;
 
 
-    public Product(String product_name, String serial, int cost_price, int selling_price,int weight, int stock, String currency) {
+    public Product(String product_name, String serial, int cost_price, int selling_price, int weight, int stock, String currency) {
         this.product_name = product_name;
         this.serial = serial;
         this.cost_price = cost_price;
@@ -26,6 +29,35 @@ public abstract class Product implements Comparable {
         this.totalProfit = 0;
         this.weight = weight;
 
+    }
+
+  /*  public Product(Product other) {
+        this.product_name = other.product_name;
+        this.serial = other.serial;
+        this.cost_price = other.cost_price;
+        this.selling_price = other.selling_price;
+        this.stock = other.stock;
+        this.currency = other.currency;
+        this.totalProfit = other.totalProfit;
+        this.weight = other.weight;
+        this.allOrders = other.allOrders;
+    }
+*/
+
+    public void saveMemento(){
+        this.memento = new ProductMemento(allOrders);
+    }
+    public void restoreFromMomneto(ProductMemento memento){
+        this.allOrders = new LinkedHashSet<>();
+        allOrders.addAll(memento.getOrders());
+    }
+
+    public ProductMemento getMemento() {
+        return memento;
+    }
+
+    public void setAllOrders(LinkedHashSet<Order> allOrders) {
+        this.allOrders = allOrders;
     }
 
     public void orderProduct() {
@@ -158,14 +190,15 @@ public abstract class Product implements Comparable {
 
 
     public void showAllOrdersAndInvoices() {
-        printTableFormat(this);
+        /*printTableFormat(this);*/
         for (Order o : allOrders) {
+            printTableFormat(this);
             System.out.println(o);
             o.showInvoice();
         }
     }
 
-    public void showAllOrders(){
+    public void showAllOrders() {
         printTableFormat(this);
         for (Order o : allOrders) {
             System.out.println(o);
@@ -173,13 +206,12 @@ public abstract class Product implements Comparable {
     }
 
     public void printTableFormat(Product product) {
-        if (product instanceof SoldThroughWebsite){
+        if (product instanceof SoldThroughWebsite) {
             System.out.printf("%-20s %-20s %-15s %-20s %-20s %-15s %-15s\n", "Order serial ID", "Product name", "Order profit"
-                    , "Shipping company", "Shipping method", "Shipping fees" , "Product cost");
+                    , "Shipping company", "Shipping method", "Shipping fees", "Product cost");
 
-        }
-        else
-              System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
+        } else
+            System.out.printf("%-20s %-20s %-15s\n", "Order serial ID", "Product name", "Order profit");
     }
 
     public void calcTotalProfit() {

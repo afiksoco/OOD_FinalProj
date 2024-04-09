@@ -1,11 +1,11 @@
 
 public class ShippingMethodFactory {
 	
-	public static ShippingMethod createShippingMethod(ShippingMethodName method,int shippingFees) {
+	public static ShippingMethod createShippingMethod(ShippingMethodName method) {
 		if(method == ShippingMethodName.EXPRESS)
-			return new ExpressShipping(shippingFees);
+			return new ExpressShipping();
 		if(method == ShippingMethodName.STANDARD)
-			return new StandardShipping(shippingFees);
+			return new StandardShipping();
 		else throw new IllegalArgumentException();
 
 	}

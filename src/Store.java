@@ -8,18 +8,53 @@ public class Store {
     public static Scanner scanner = new Scanner(System.in);
     private Set<Product> allProducts = new TreeSet<>(); //sort by String
     private static Store instance;
-    private static Stack<Command> stack = new Stack<>();
-    private FedEx fedEx = new FedEx("Afik", "0526410559");
-    private DHL DHL   = new DHL("soco", " 41564685132");
+    private Stack<Command> stack = new Stack<>();
+    private FedEx fedEx;
+    private DHL DHL;
+    private  StoreMemento memento;
 
 
-
+    public Store() {
+        this.fedEx = new FedEx("Afik", "0526410559");
+        this.DHL = new DHL("soco", " 41564685132");
+    }
 
     public static Store getInstance() { //singleton
         if (instance == null) instance = new Store();
         return instance;
     }
+    public void saveToMemento() {
+        this.memento = new StoreMemento(allProducts, stack);
+        System.out.println("State saved!");
+    }
 
+
+    public StoreMemento getMemento() {
+        return memento;
+    }
+
+    public void restoreFromMemento(StoreMemento memento) {
+        this.allProducts = new TreeSet<>();
+        allProducts.addAll(memento.getAllProducts());
+        for (Product product : allProducts){
+            product.restoreFromMomneto(product.getMemento());
+        }
+        this.stack = new Stack<>();
+        this.stack.addAll(memento.getStack());
+        System.out.println("Stare restored!");
+    }
+
+    public Stack<Command> getStack() {
+        return stack;
+    }
+
+    public DHL getDHL() {
+        return DHL;
+    }
+
+    public FedEx getFedEx() {
+        return fedEx;
+    }
 
     public void removeProductBySerial() {
         System.out.println("Enter serial ID of the product you want to remove!");
@@ -116,7 +151,7 @@ public class Store {
             System.out.println("Product added successfully");
     }
 
-    public void showSystem(){
+    public void showSystem() {
         showAllProducts(Product.class);
         int profit = Calculator.calcTotalProfitInILS(allProducts);
         System.out.println("Total profit from all orders : " + profit + " ILS");
