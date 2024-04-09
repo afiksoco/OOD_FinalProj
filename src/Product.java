@@ -1,9 +1,8 @@
 import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Stack;
-import java.util.TreeSet;
+import java.util.Set;
 
-public abstract class Product implements Comparable {
+public abstract class Product implements Comparable<Object> {
 
 
     private String product_name;
@@ -11,12 +10,13 @@ public abstract class Product implements Comparable {
     private int cost_price; // for the store
     private int selling_price; // for costumer
     private int stock;
+    int weight;
+    
     private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
     private String currency;
     private int totalProfit;
 
-    private  ProductMemento memento;
-    int weight;
+    private Memento memento;
 
 
     public Product(String product_name, String serial, int cost_price, int selling_price, int weight, int stock, String currency) {
@@ -29,18 +29,6 @@ public abstract class Product implements Comparable {
         this.totalProfit = 0;
         this.weight = weight;
 
-    }
-
-    public void saveMemento(){
-        this.memento = new ProductMemento(allOrders);
-    }
-    public void restoreFromMomneto(ProductMemento memento){
-        this.allOrders = new LinkedHashSet<>();
-        allOrders.addAll(memento.getOrders());
-    }
-
-    public ProductMemento getMemento() {
-        return memento;
     }
 
     public void setAllOrders(LinkedHashSet<Order> allOrders) {
@@ -171,7 +159,7 @@ public abstract class Product implements Comparable {
             return;
         }
         showAllOrdersAndInvoices();
-        System.out.println("Total profits from orders : " + getProfit() + " " + currency);
+        System.out.println("Total profits from orders: " + getProfit() + " " + currency);
 
     }
 
@@ -221,6 +209,37 @@ public abstract class Product implements Comparable {
 
     public void setProfit(int profit) {
         this.totalProfit = profit;
+    }
+    
+    
+    
+    public void createMemento() {
+        this.memento = new Memento(allOrders,totalProfit);
+    }
+
+    public void setMemento(Memento m) {
+        if (m == null)
+            return;
+         allOrders = new LinkedHashSet<>(m.getAllOrders());
+         totalProfit= m.totalProfit;
+    }
+    
+    public Memento getMemento() {
+    	return memento;
+    }
+
+    public static class Memento {
+        private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
+        private int totalProfit;
+        
+        public Memento(Set<Order> allOrders,int totalProfit) {
+            this.allOrders = new LinkedHashSet<>(allOrders);
+            this.totalProfit = totalProfit;
+        }
+
+        public Set<Order> getAllOrders() {
+            return allOrders;
+        }
     }
 }
 

@@ -5,11 +5,11 @@ public class Order {
 
 	private Product product;
 	private Customer costumer;
-	private int amount;
 	private  String serial;
+	private int amount;
 	private  int profit;
-
 	private  int cost;
+
 
 	private FormatForCostumer invoiceForCostumer;
 	private FormatForAccountant invoiceForAccountant;

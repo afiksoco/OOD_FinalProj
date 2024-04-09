@@ -7,7 +7,7 @@ public class FormatForCostumer extends  Invoice{
 
     @Override
     public String toString() {
-        return "\u001B[4mInvoice for accountant\u001B[0m" +
-        super.toString()  + "\nTaxes : " + taxes +" " + order.getProduct().getCurrency()+ "\nDate : " +formattedDateTime + "\n";
+        return "\u001B[4mInvoice for costumer\u001B[0m" +
+        super.toString()  + "\nTaxes: " + taxes +" " + order.getProduct().getCurrency()+ "\nDate : " +formattedDateTime + "\n";
     }
 }

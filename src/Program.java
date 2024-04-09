@@ -5,7 +5,8 @@ public class Program {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
+    	Store.Memento sm =null;
+    	
         String choice;
 
         System.out.println("Welcome to the Store!");
@@ -64,12 +65,12 @@ public class Program {
                 	store.showAllOrdersForProduct();
                     break;
                 case "10":
-                   store.saveToMemento();
-
+                   sm = store.createMemento();
+                   
                     // Implement save system functionality
                     break;
                 case "11":
-                    store.restoreFromMemento(store.getMemento());
+                    store.setMemento(sm);
                     break;
                 case "e":
                 case "E":
@@ -104,7 +105,7 @@ public class Program {
         store.getAllProducts().add(p1);
 
         MakeOrderCommand cmd1 = new MakeOrderCommand(p1, costumer,2, "asdd2");
-        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer , 2, "gsdd2");
+        MakeOrderCommand cmd2 = new MakeOrderCommand(p1, costumer , 2, "sdd2");
         MakeOrderCommand cmd3 = new MakeOrderCommand(p1, costumer , 1, "wsdd2");
         cmd1.execute();
         cmd2.execute();

@@ -6,13 +6,11 @@ import java.util.TreeSet;
 
 public class Store {
     public static Scanner scanner = new Scanner(System.in);
-    private Set<Product> allProducts = new TreeSet<>(); //sort by String
     private static Store instance;
+    private Set<Product> allProducts = new TreeSet<>(); //sort by String
     private Stack<Command> stack = new Stack<>();
     private FedEx fedEx;
     private DHL DHL;
-    private StoreMemento memento;
-
 
     public Store() {
         this.fedEx = new FedEx("Afik", "0526410559");
@@ -22,31 +20,6 @@ public class Store {
     public static Store getInstance() { //singleton
         if (instance == null) instance = new Store();
         return instance;
-    }
-
-    public void saveToMemento() {
-        this.memento = new StoreMemento(allProducts, stack);
-        System.out.println("State saved!");
-    }
-
-
-    public StoreMemento getMemento() {
-        return memento;
-    }
-
-    public void restoreFromMemento(StoreMemento memento) {
-        if (memento == null) {
-            System.out.println("No previous states.");
-            return;
-        }
-        this.allProducts = new TreeSet<>();
-        allProducts.addAll(memento.getAllProducts());
-        for (Product product : allProducts) {
-            product.restoreFromMomneto(product.getMemento());
-        }
-        this.stack = new Stack<>();
-        this.stack.addAll(memento.getStack());
-        System.out.println("State restored!");
     }
 
     public Stack<Command> getStack() {
@@ -159,7 +132,7 @@ public class Store {
     public void showSystem() {
         showAllProducts(Product.class);
         int profit = Calculator.calcTotalProfitInILS(allProducts);
-        System.out.println("Total profit from all orders : " + profit + " ILS");
+        System.out.println("Total profit from all orders: " + profit + " ILS");
 
     }
 
@@ -197,8 +170,8 @@ public class Store {
         Product p = infoForProduct();
         if (p != null) {
             int newAmount;
-            System.out.println("Currect amount : " + p.getStock());
-            System.out.println("Enter new amount : ");
+            System.out.println("Currect amount: " + p.getStock());
+            System.out.println("Enter new amount: ");
             newAmount = scanner.nextInt();
             if (newAmount < 0)
                 System.out.println("Invalid amount! Exiting...");
@@ -249,7 +222,48 @@ public class Store {
                 return;
             }
             p.showAllOrders();
-            System.out.println("Store total profit for this product is : " + p.getProfit() + " " + p.getCurrency());
+            System.out.println("Store total profit for this product is: " + p.getProfit() + " " + p.getCurrency());
         }
     }
+    
+    public Memento createMemento() {
+    	for (Product product : allProducts)
+    		product.createMemento();
+        return new Memento(allProducts, stack);
+    }
+
+    public void setMemento(Memento m) {
+        if (m == null) {
+            System.out.println("No previous states.");
+            return;
+        }
+        allProducts = new TreeSet<>(m.getAllProducts());
+        for (Product product : allProducts) {
+          product.setMemento(product.getMemento());
+      }
+        stack = new Stack<>();
+        this.stack.addAll(m.getStack());
+        System.out.println("State restored!");
+    }
+
+    public static class Memento {
+        private Set<Product> allProducts = new TreeSet<>();
+        private Stack<Command> stack = new Stack<>();
+
+        public Memento(Set<Product> allProducts, Stack<Command> stack) {
+            this.allProducts = new TreeSet<>(allProducts);
+            this.stack = new Stack<>();
+        }
+
+        public Set<Product> getAllProducts() {
+            return allProducts;
+        }
+
+        public Stack<Command> getStack() {
+            return stack;
+        }
+    }
+
+    
+    
 }

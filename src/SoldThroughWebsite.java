@@ -2,7 +2,6 @@ public class SoldThroughWebsite extends Product implements Shipable {
 
 
 	private String destCountry;
-	//private ShippingType shippingType;
 	private Boolean expressShipping;
     private Boolean standardShipping;
 

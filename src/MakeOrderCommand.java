@@ -3,21 +3,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MakeOrderCommand implements Command {
+	public static Scanner scanner = new Scanner(System.in);
+	private List<Observer> observers = new ArrayList<>();
     private Product product;
+    private Customer customer;
+    private ShippingCompany shippingCompany;
+    private ShippingMethod shippingMethod;
+    private String serial;
+    private int amount;
+    
     private int previousAmount;
     private int previousProfit;
 
-    private Customer customer;
-    private int amount;
-
-    private String serial;
-    private List<Observer> observers = new ArrayList<>();
-
-    public static Scanner scanner = new Scanner(System.in);
-
-    private ShippingMethod shippingMethod;
-
-    ShippingCompany shippingCompany;
 
     public MakeOrderCommand(Product product, Customer customer, int amount, String serial) {
         this.product = product;
@@ -40,7 +37,7 @@ public class MakeOrderCommand implements Command {
         orderInfo();
     }
 
-    public boolean checkIfOrderExists(String serial) { // despite the SET class checks for duplicates, // we want to stop the order info at the begginin
+    public boolean checkIfOrderExists(String serial) { // despite the SET class checks for duplicates, // we want to stop the order info at the beginning
 
         for (Order o : product.getAllOrders()) {
             if (o.getSerial().equals(serial))
@@ -53,14 +50,14 @@ public class MakeOrderCommand implements Command {
     public void orderInfo() {
         String cName;
         String cNumber;
-        System.out.println("Enter customer name  ");
+        System.out.println("Enter customer name.");
         cName = scanner.next();
-        System.out.println("Enter customer phone number ");
+        System.out.println("Enter customer phone number.");
         cNumber = scanner.next();
         customer = new Customer(cName, cNumber);
 
 
-        System.out.println("Enter serial ID for the order : ");
+        System.out.println("Enter serial ID for the order.");
         serial = scanner.next();
 
         if (checkIfOrderExists(serial)) {
@@ -68,7 +65,7 @@ public class MakeOrderCommand implements Command {
             return;
         }
 
-        System.out.println("Enter amount : ( current available amount : " + product.getStock() + " )");
+        System.out.println("Enter amount: (current available amount: " + product.getStock() + ")");
         do {
             amount = scanner.nextInt();
             if (amount <= 0) {
@@ -77,7 +74,7 @@ public class MakeOrderCommand implements Command {
         } while (amount <= 0);
 
         if (amount > product.getStock()) {
-            System.out.println("Not enough in storage... Exiting...");
+            System.out.println("Not enough in storage! Exiting...");
         }
 
     }
