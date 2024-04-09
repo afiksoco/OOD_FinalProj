@@ -11,7 +11,7 @@ public class Store {
     private Stack<Command> stack = new Stack<>();
     private FedEx fedEx;
     private DHL DHL;
-    private  StoreMemento memento;
+    private StoreMemento memento;
 
 
     public Store() {
@@ -23,6 +23,7 @@ public class Store {
         if (instance == null) instance = new Store();
         return instance;
     }
+
     public void saveToMemento() {
         this.memento = new StoreMemento(allProducts, stack);
         System.out.println("State saved!");
@@ -34,14 +35,18 @@ public class Store {
     }
 
     public void restoreFromMemento(StoreMemento memento) {
+        if (memento == null) {
+            System.out.println("No previous states.");
+            return;
+        }
         this.allProducts = new TreeSet<>();
         allProducts.addAll(memento.getAllProducts());
-        for (Product product : allProducts){
+        for (Product product : allProducts) {
             product.restoreFromMomneto(product.getMemento());
         }
         this.stack = new Stack<>();
         this.stack.addAll(memento.getStack());
-        System.out.println("Stare restored!");
+        System.out.println("State restored!");
     }
 
     public Stack<Command> getStack() {
