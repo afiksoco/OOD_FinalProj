@@ -31,19 +31,6 @@ public abstract class Product implements Comparable {
 
     }
 
-  /*  public Product(Product other) {
-        this.product_name = other.product_name;
-        this.serial = other.serial;
-        this.cost_price = other.cost_price;
-        this.selling_price = other.selling_price;
-        this.stock = other.stock;
-        this.currency = other.currency;
-        this.totalProfit = other.totalProfit;
-        this.weight = other.weight;
-        this.allOrders = other.allOrders;
-    }
-*/
-
     public void saveMemento(){
         this.memento = new ProductMemento(allOrders);
     }
