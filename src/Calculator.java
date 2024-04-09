@@ -76,6 +76,7 @@ public class Calculator {
 
     public static int getBasePriceForFedexByWeight(int base, Product product) {
         int weight = product.weight / 10 * 10;
+
         return base*weight;
     }
 
