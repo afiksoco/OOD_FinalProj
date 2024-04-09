@@ -10,7 +10,7 @@ public class ProductFactory {
 		Product p = null;
 
 		System.out.println(
-				"Choose type on product.\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
+				"\nChoose type on product:\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
 
 		while (true) {
 			choice = scanner.nextInt();

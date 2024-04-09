@@ -12,7 +12,7 @@ public class Program {
         System.out.println("Welcome to the Store!");
 
         do {
-            System.out.println("1. Load Hardcoded Data");
+            System.out.println("\n1. Load Hardcoded Data");
             System.out.println("2. Add Product");
             System.out.println("3. Delete Product");
             System.out.println("4. Update Product Stock");
@@ -25,13 +25,13 @@ public class Program {
             System.out.println("11. Load state from last save");
 
             System.out.println("e/E - Exit");
-            System.out.print("Enter your choice: ");
+            System.out.print("\nEnter your choice: ");
 
             choice = scanner.next();
             switch (choice) {
                 case "1":
                     hardcoded();
-                    System.out.println("Uploading hardcoded data...");
+                    System.out.println("\nUploading hardcoded data...");
 
 
                     break;

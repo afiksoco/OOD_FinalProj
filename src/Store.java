@@ -127,7 +127,7 @@ public class Store {
 
     public void addProductToStore() {
         if (allProducts.add(ProductFactory.createProduct()))
-            System.out.println("Product added successfully");
+            System.out.println("\nProduct added successfully!");
     }
 
     public void showSystem() {
