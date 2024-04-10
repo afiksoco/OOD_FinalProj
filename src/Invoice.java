@@ -20,7 +20,7 @@ public class Invoice {
         return
                 "\nOrder: " + order.getSerial() +
                         "\nAmount: " + order.getAmount() +
-                        "\nProoduct name: " + order.getProduct().getProduct_name() +
+                        "\nProduct name: " + order.getProduct().getProduct_name() +
                         "\nTotal cost:  " + Calculator.calcTotalCostForCostumer(order.getProduct(), order.getAmount())+
                         " " + order.getProduct().getCurrency();
     }

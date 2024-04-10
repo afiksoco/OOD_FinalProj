@@ -113,9 +113,38 @@ public class MakeOrderCommand implements Command {
     }
 
     public void printCmdRes(){
+    	int choice = 0;
         System.out.println("\nOrder received!");
         product.printTableFormat(product);
         System.out.println(newOrder);
+        if(product instanceof AccountantInvoiceable || product instanceof CostumerInvoiceable)
+        {
+        		if(product instanceof AccountantInvoiceable && product instanceof CostumerInvoiceable) {
+        			do {
+	        			System.out.println("\nWould you like to see invoice? press -1 to skip.");
+        				System.out.println("\n1. Accountant invoice.\n2. Costumer invoice.\n");
+        				choice = scanner.nextInt();
+        				switch(choice) {
+        				case 1:
+        					System.out.println(newOrder.getInvoiceForAccountant());
+        					break;
+        				case 2:
+        					System.out.println(newOrder.getInvoiceForCostumer());
+        					break;
+        				case -1:
+        					break;
+        				default:
+        					System.out.println("Invalid choice. Please try again.");        			
+        				}
+        			}while(choice != -1);	
+        		}
+        		else {
+        			System.out.println("\nWould you like to see invoice? press 1 to show or -1 to skip.");
+    				choice = scanner.nextInt();
+    				if(choice == 1 )
+    					newOrder.showInvoice();
+        		}
+        }
     }
 
     @Override

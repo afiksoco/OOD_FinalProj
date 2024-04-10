@@ -35,6 +35,12 @@ public class Store {
     }
 
     public void removeProductBySerial() {
+    	
+     	if (getAllProducts().isEmpty()) {
+    		System.out.println("\nThere isn't products in store! Exiting...");
+    		return;
+    	}
+     	
         showAllProducts(Product.class);
         System.out.println("\nEnter serial ID of the product you want to remove");
         Product p = infoForProduct();
@@ -58,6 +64,12 @@ public class Store {
 
 
     public void createNewOrder() {
+    	
+    	if (getAllProducts().isEmpty()) {
+    		System.out.println("\nThere isn't products in store to order! Exiting...");
+    		return;
+    	}
+    	
         System.out.println("\nChoose type on product:\n1- Sold through website.\n2- Sold in store.\n3- Sold to wholesalers.");
         int choice;
         while (true) {
@@ -69,7 +81,6 @@ public class Store {
                 System.out.println("Invalid choice. Please enter a number between 1 and 3.");
             }
         }
-
         switch (choice) {
             case 1:
                 if (checkIfListHasType(SoldThroughWebsite.class))
@@ -131,6 +142,11 @@ public class Store {
     }
 
     public void showSystem() {
+    	
+     	if (getAllProducts().isEmpty()) {
+    		System.out.println("\nThere isn't products in store! Exiting...");
+    		return;
+    	}
         showAllProducts(Product.class);
         int profit = Calculator.calcTotalProfitInILS(allProducts);
         System.out.println("\nTotal profit from all orders: " + profit + " ILS");
@@ -167,6 +183,12 @@ public class Store {
     }
 
     public void updateProductStock() {
+    	
+     	if (getAllProducts().isEmpty()) {
+    		System.out.println("\nThere isn't products in store! Exiting...");
+    		return;
+    	}
+     	
         showAllProducts(Product.class);
         System.out.println("\nEnter serial ID of the product you want to update its stock");
         Product p = infoForProduct();
@@ -190,14 +212,15 @@ public class Store {
             cmd.undo();
 
         } else {
-            System.out.println("No previous orders.");
+            System.out.println("\nNo previous orders.");
 
         }
     }
 
     public void showDetailedProductInfo() {
-        if (allProducts.isEmpty()) {
-            System.out.println("Add some products first! Exiting...");
+       
+    	if (allProducts.isEmpty()) {
+            System.out.println("\nAdd some products first! Exiting...");
             return;
         }
         showAllProducts(Product.class);
@@ -211,8 +234,9 @@ public class Store {
     }
 
     public void showAllOrdersForProduct() {
-        if (allProducts.isEmpty()) {
-            System.out.println("Add some products first! Exiting...");
+       
+    	if (allProducts.isEmpty()) {
+            System.out.println("\nAdd some products first! Exiting...");
             return;
         }
         showAllProducts(Product.class);

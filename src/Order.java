@@ -12,6 +12,7 @@ public class Order {
 
 
 	private FormatForCostumer invoiceForCostumer;
+
 	private FormatForAccountant invoiceForAccountant;
 
 
@@ -71,6 +72,14 @@ public class Order {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	
+	public FormatForCostumer getInvoiceForCostumer() {
+		return invoiceForCostumer;
+	}
+	
+	public FormatForAccountant getInvoiceForAccountant() {
+		return invoiceForAccountant;
 	}
 
 	public int compareTo(Object other) {
