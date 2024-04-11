@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MakeOrderCommand implements Command {
+
 	public static Scanner scanner = new Scanner(System.in);
 	private List<Observer> observers = new ArrayList<>();
 	private Product product;
@@ -70,12 +71,12 @@ public class MakeOrderCommand implements Command {
 		do {
 			amount = scanner.nextInt();
 			if (amount <= 0) {
-				System.out.println("Amount must be greater than 0. Please try again.");
+				System.out.println("\nAmount must be greater than 0. Please try again.");
 			}
 		} while (amount <= 0);
 
 		if (amount > product.getStock()) {
-			System.out.println("Not enough in storage! Exiting...");
+			System.out.println("\nNot enough in storage! Exiting...");
 		}
 
 	}
@@ -205,4 +206,7 @@ public class MakeOrderCommand implements Command {
 			return ShippingMethodFactory.createShippingMethod(ShippingMethodName.STANDARD);
 	}
 
+	public int getAmount() {
+		return amount;
+	}
 }

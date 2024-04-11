@@ -2,7 +2,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class Product implements Comparable<Object> {
+public class Product implements Comparable<Object> {
 
 
     private String product_name;
@@ -10,7 +10,7 @@ public abstract class Product implements Comparable<Object> {
     private int cost_price; // for the store
     private int selling_price; // for costumer
     private int stock;
-    int weight;
+    protected int weight;
 
     private LinkedHashSet<Order> allOrders = new LinkedHashSet<>();
     private String currency;

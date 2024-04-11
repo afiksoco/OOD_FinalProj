@@ -78,7 +78,7 @@ public class Store {
             if (choice >= 1 && choice <= 3) {
                 break;
             } else {
-                System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                System.out.println("\nInvalid choice. Please enter a number between 1 and 3.");
             }
         }
         switch (choice) {
@@ -86,7 +86,7 @@ public class Store {
                 if (checkIfListHasType(SoldThroughWebsite.class))
                     showAllProducts(SoldThroughWebsite.class);
                 else {
-                    System.out.println("There isn't product of this type! Exiting...");
+                    System.out.println("\nThere isn't product of this type! Exiting...");
                     return;
                 }
                 break;
@@ -94,7 +94,7 @@ public class Store {
                 if (checkIfListHasType(SoldInStore.class))
                     showAllProducts(SoldInStore.class);
                 else {
-                    System.out.println("There isn't product of this type! Exiting...");
+                    System.out.println("\nThere isn't product of this type! Exiting...");
                     return;
                 }
                 break;
@@ -102,8 +102,8 @@ public class Store {
                 if (checkIfListHasType(SoldToWholesalers.class))
                     showAllProducts(SoldToWholesalers.class);
                 else {
-                    System.out.println("There isn't product of this type! Exiting...");
-                    return;
+                    System.out.println("\nThere isn't product of this type! Exiting...");
+                    return ;
                 }
                 break;
             default:
@@ -114,6 +114,8 @@ public class Store {
         Product p = infoForProduct();
         if (p != null) {
             MakeOrderCommand command = new MakeOrderCommand(p);
+            if(p.getStock() < command.getAmount())
+            	return;
             command.addObserver(DHL);
             command.addObserver(fedEx);
             command.execute();
@@ -177,7 +179,7 @@ public class Store {
         if (p != null)
             return p;
         else {
-            System.out.println("Product with serial ID '" + serialID + "' not found.");
+            System.out.println("\nProduct with serial ID '" + serialID + "' not found.");
         }
         return null;
     }
@@ -198,7 +200,7 @@ public class Store {
             System.out.println("Enter new amount ");
             newAmount = scanner.nextInt();
             if (newAmount < 0)
-                System.out.println("Invalid amount! Exiting...");
+                System.out.println("\nInvalid amount! Exiting...");
             else {
                 p.setStock(newAmount);
                 System.out.println("\nProduct's stock updated to " + newAmount + "!");
@@ -244,14 +246,14 @@ public class Store {
         Product p = infoForProduct();
         if (p != null) {
             if (p.getAllOrders().isEmpty()) {
-                System.out.println("No current orders for this product!");
+                System.out.println("\nNo current orders for this product!");
                 return;
             }
             p.showAllOrders();
             System.out.println("\nStore total profit for this product is: " + p.getProfit() + " " + p.getCurrency());
         }
     }
-
+    
     public Memento createMemento() {
         for (Product product : allProducts)
             product.createMemento();
@@ -279,7 +281,7 @@ public class Store {
 
         public Memento(Set<Product> allProducts, Stack<Command> stack) {
             this.allProducts = new TreeSet<>(allProducts);
-            this.stack = new Stack<>();
+            this.stack.addAll(stack);
         }
 
         public Set<Product> getAllProducts() {
