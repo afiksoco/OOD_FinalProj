@@ -32,11 +32,10 @@ public class Program {
                 case "1":
                     hardcoded();
                     System.out.println("\nUploading hardcoded data...");
-
-
                     break;
                 case "2":
                     store.addProductToStore();
+                    // Implement add product functionality
                     break;
                 case "3":
                     store.removeProductBySerial();
@@ -59,12 +58,12 @@ public class Program {
                     // Implement show product details by serial functionality
                     break;
                 case "8":
+                	store.showSystem();
                     // 'Implement show all available products functionality
-                    store.showSystem();
                     break;
                 case "9":
+                	store.showAllOrdersForProduct();
                     // Implement show all product orders functionality
-                    store.showAllOrdersForProduct();
                     break;
                 case "10":
                     sm = store.createMemento();
@@ -72,6 +71,7 @@ public class Program {
                     break;
                 case "11":
                     store.setMemento(sm);
+                    // Implement restore system functionality
                     break;
                 case "e":
                 case "E":

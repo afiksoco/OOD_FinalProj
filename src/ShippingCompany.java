@@ -2,7 +2,7 @@ public abstract class  ShippingCompany implements Observer {
 	private String contact;
 	private String phoneNumber;
 
-	public ShippingCompany(String contact, String phoneNumber) { // removed shipping type  to check something!!
+	public ShippingCompany(String contact, String phoneNumber) {
 		this.setContact(contact);
 		this.setPhoneNumber(phoneNumber);
 

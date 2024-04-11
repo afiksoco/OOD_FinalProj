@@ -1,4 +1,5 @@
 public class Customer {
+	
 	private String customer_name;
 	private String mobile;
 
@@ -19,5 +20,8 @@ public class Customer {
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	public String toString() {
+		return "customer " + customer_name + " - " + mobile;
 	}
 }
