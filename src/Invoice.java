@@ -2,10 +2,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Invoice {
-    Order order;
-    LocalDateTime dateTime;
+    protected Order order;
+    protected LocalDateTime dateTime;
 
-    String formattedDateTime;
+    protected String formattedDateTime;
 
     public Invoice(Order order){
         this.order = order;
