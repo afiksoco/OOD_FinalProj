@@ -9,10 +9,7 @@ public class Order {
 	private int amount;
 	private  int profit;
 	private  int cost;
-
-
 	private FormatForCostumer invoiceForCostumer;
-
 	private FormatForAccountant invoiceForAccountant;
 
 

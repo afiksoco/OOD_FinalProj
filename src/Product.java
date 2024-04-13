@@ -165,7 +165,6 @@ public class Product implements Comparable<Object> {
 
 
     public void showAllOrdersAndInvoices() {
-        /*printTableFormat(this);*/
         for (Order o : allOrders) {
             printTableFormat(this);
             System.out.println(o+"\n");

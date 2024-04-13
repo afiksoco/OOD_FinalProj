@@ -6,7 +6,6 @@ public class Program {
 
     public static void main(String[] args) {
         Store.Memento sm = null;
-
         String choice;
 
         System.out.println("Welcome to the Store!");
